@@ -1,102 +1,184 @@
+
 import * as React from 'react';
+import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
+import Grid from '@mui/material/Grid';
 import {
+  Scheduler,
+  Toolbar,
+  MonthView,
   WeekView,
+  ViewSwitcher,
   Appointments,
   AppointmentTooltip,
   AppointmentForm,
-  DateNavigator,
-  Toolbar,
-  DayView,
+  DragDropProvider,
+  EditRecurrenceMenu,
+  AllDayPanel,
   TodayButton,
-  ViewSwitcher,
+  DateNavigator,
+  DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
-import Grid from '@mui/material/Grid';
+import { appointments } from '../demo/appointments';
 
+const PREFIX = 'Demo';
+const classes = {
+  content: `${PREFIX}-content`,
+  header: `${PREFIX}-header`,
+  closeButton: `${PREFIX}-closeButton`,
+  buttonGroup: `${PREFIX}-buttonGroup`,
+  button: `${PREFIX}-button`,
+  picker: `${PREFIX}-picker`,
+  wrapper: `${PREFIX}-wrapper`,
+  icon: `${PREFIX}-icon`,
+  textField: `${PREFIX}-textField`,
+  addButton: `${PREFIX}-addButton`,
+};
 
-import appointments from '../demo/today-appointments';
-import { ViewState } from '@devexpress/dx-react-scheduler';
-import {
-  Scheduler,
-} from '@devexpress/dx-react-scheduler-material-ui';
+const StyledFab = styled(Fab)(({ theme }) => ({
+  [`&.${classes.addButton}`]: {
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    right: theme.spacing(4),
+  },
+}));
 
-function SchedulingComponent() {
-    const initialState = {
-        data: [],
-        loading: false,
-        currentDate: '2017-05-23',
-        currentViewName: 'Day',
-        location: ''
-      };
-
-    const mapAppointmentData = (appointment) => ({
-        id: appointment.id,
-        startDate: appointment.start.dateTime,
-        endDate: appointment.end.dateTime,
-        title: appointment.summary,
-        location: appointment.location,
-    });
-      
-    const reducer = (state, action) => {
-        switch (action.type) {
-            case 'setLoading':
-            return { ...state, loading: action.payload };
-            case 'setData':
-            return { ...state, data: action.payload.map(mapAppointmentData) };
-            case 'setCurrentViewName':
-            return { ...state, currentViewName: action.payload };
-            case 'setCurrentDate':
-            return { ...state, currentDate: action.payload };
-            default:
-            return state;
-        }
+export default class SchedulingComponent extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: appointments,
+      currentDate: '2018-06-27',
+      confirmationVisible: false,
+      editingFormVisible: false,
+      deletedAppointmentId: undefined,
+      editingAppointment: undefined,
+      previousAppointment: undefined,
+      addedAppointment: {},
+      startDayHour: 9,
+      endDayHour: 19,
+      isNewAppointment: false,
     };
-    const [state, dispatch] = React.useReducer(reducer, initialState);
+
+    this.toggleConfirmationVisible = this.toggleConfirmationVisible.bind(this);
+    this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this);
+    this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this);
+
+    this.commitChanges = this.commitChanges.bind(this);
+    this.onEditingAppointmentChange = this.onEditingAppointmentChange.bind(this);
+    this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this);
+  }
+
+  componentDidUpdate() {
+    // this.appointmentForm.update();
+  }
+
+  onEditingAppointmentChange(editingAppointment) {
+    this.setState({ editingAppointment });
+  }
+
+  onAddedAppointmentChange(addedAppointment) {
+    this.setState({ addedAppointment });
+    const { editingAppointment } = this.state;
+    if (editingAppointment !== undefined) {
+      this.setState({
+        previousAppointment: editingAppointment,
+      });
+    }
+    this.setState({ editingAppointment: undefined, isNewAppointment: true });
+  }
+
+  setDeletedAppointmentId(id) {
+    this.setState({ deletedAppointmentId: id });
+  }
+
+  toggleEditingFormVisibility() {
+    const { editingFormVisible } = this.state;
+    this.setState({
+      editingFormVisible: !editingFormVisible,
+    });
+  }
+
+  toggleConfirmationVisible() {
+    const { confirmationVisible } = this.state;
+    this.setState({ confirmationVisible: !confirmationVisible });
+  }
+
+  commitDeletedAppointment() {
+    this.setState((state) => {
+      const { data, deletedAppointmentId } = state;
+      const nextData = data.filter(appointment => appointment.id !== deletedAppointmentId);
+
+      return { data: nextData, deletedAppointmentId: null };
+    });
+    this.toggleConfirmationVisible();
+  }
+
+  commitChanges({ added, changed, deleted }) {
+    this.setState((state) => {
+      let { data } = state;
+      if (added) {
+        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        data = [...data, { id: startingAddedId, ...added }];
+      }
+      if (changed) {
+        data = data.map(appointment => (
+          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+      }
+      if (deleted !== undefined) {
+        this.setDeletedAppointmentId(deleted);
+        this.toggleConfirmationVisible();
+      }
+      return { data, addedAppointment: {} };
+    });
+  }
+
+  // const CustomAppointment = ({ style, ...restProps }) => {
+  //   if (restProps.data.location === "Room 1")
+  //     return (
+  //       <Appointments.Appointment
+  //         {...restProps}
+  //         style={{ ...style, backgroundColor: "red" }}
+  //         className="CLASS_ROOM1"
+  //         data={restProps.data.location}
+  //       />
+  //     );
+  //   if (restProps.data.location === "Room 2")
+  //     return (
+  //       <Appointments.Appointment
+  //         {...restProps}
+  //         style={{ ...style, backgroundColor: "green" }}
+  //         className="CLASS_ROOM2"
+  //       />
+  //     );
+  //   return (
+  //     <Appointments.Appointment
+  //       {...restProps}
+  //       style={style}
+  //       className="CLASS_ROOM3"
+  //     />
+  //   );
+  // };
+
+  render() {
     const {
-      data, loading, currentViewName, currentDate,
-    } = state;
-    const setCurrentViewName = React.useCallback((nextViewName) => dispatch({
-      type: 'setCurrentViewName', payload: nextViewName,
-    }), [dispatch]);
-    const setData = React.useCallback((nextData) => dispatch({
-      type: 'setData', payload: nextData,
-    }), [dispatch]);
-    const setCurrentDate = React.useCallback((nextDate) => dispatch({
-      type: 'setCurrentDate', payload: nextDate,
-    }), [dispatch]);
-    const setLoading = React.useCallback((nextLoading) => dispatch({
-      type: 'setLoading', payload: nextLoading,
-    }), [dispatch]);
-
-
-    // const CustomAppointment = ({ style, ...restProps }) => {
-    //   if (restProps.data.location === "Room 1")
-    //     return (
-    //       <Appointments.Appointment
-    //         {...restProps}
-    //         style={{ ...style, backgroundColor: "red" }}
-    //         className="CLASS_ROOM1"
-    //         data={restProps.data.location}
-    //       />
-    //     );
-    //   if (restProps.data.location === "Room 2")
-    //     return (
-    //       <Appointments.Appointment
-    //         {...restProps}
-    //         style={{ ...style, backgroundColor: "green" }}
-    //         className="CLASS_ROOM2"
-    //       />
-    //     );
-    //   return (
-    //     <Appointments.Appointment
-    //       {...restProps}
-    //       style={style}
-    //       className="CLASS_ROOM3"
-    //     />
-    //   );
-    // };
-        
+      currentDate,
+      data,
+      confirmationVisible,
+      editingFormVisible,
+      startDayHour,
+      endDayHour,
+    } = this.state;
 
     const AppointmentContent = ({ style, ...restProps }) => {
       return (
@@ -116,52 +198,95 @@ function SchedulingComponent() {
         <Grid container alignItems="center">
           <Grid item xs={10}>
             <span>{appointmentData.location}</span>
+            <div>Your information</div>
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>
     ));
 
     return (
-    <div className="scheduling-page">
-        <Paper>
-          <Scheduler
-            data={appointments}
-            height={600}
-          >
-            <ViewState
-                currentDate={currentDate}
-                currentViewName={currentViewName}
-                onCurrentViewNameChange={setCurrentViewName}
-                onCurrentDateChange={setCurrentDate}
+      <Paper>
+        <Scheduler
+          data={data}
+          height={660}
+        >
+          <ViewState
+                defaultCurrentDate="2018-07-27"
             />
-            <DayView
-                startDayHour={7.5}
-                endDayHour={17.5}
+          <EditingState
+            onCommitChanges={this.commitChanges}
+            onEditingAppointmentChange={this.onEditingAppointmentChange}
+            onAddedAppointmentChange={this.onAddedAppointmentChange}
+          />
+          <DayView
+                startDayHour={0}
+                endDayHour={24}
             />
-            <WeekView
-                startDayHour={7.5}
-                endDayHour={17.5}
-            />
-            <Appointments
-              appointmentContentComponent={AppointmentContent} 
-              // appointmentContentComponent={AppointmentContent}
-            />
-            <Toolbar/>
-            <DateNavigator />
-            <TodayButton />
-            <ViewSwitcher />
-            <AppointmentTooltip
-                showCloseButton
-                showOpenButton
-                contentComponent={Content}
-            />
-            <AppointmentForm/>
-          </Scheduler>
-        </Paper>
-    </div>
-    )
+          <WeekView
+            startDayHour={startDayHour}
+            endDayHour={endDayHour}
+          />
+          <MonthView />
+          <AllDayPanel />
+          <EditRecurrenceMenu />
+          <Appointments 
+            appointmentContentComponent={AppointmentContent} 
+            // appointmentContentComponent={AppointmentContent}
+          />
+          <AppointmentTooltip
+            showOpenButton
+            showCloseButton
+            showDeleteButton
+            contentComponent={Content}
+          />
+          <Toolbar />
+          <ViewSwitcher />
+          <DateNavigator />
+          <TodayButton />
+          <AppointmentForm
+            visible={editingFormVisible}
+            onVisibilityChange={this.toggleEditingFormVisibility}
+          />
+          <DragDropProvider />
+        </Scheduler>
+
+        <Dialog
+          open={confirmationVisible}
+          onClose={this.cancelDelete}
+        >
+          <DialogTitle>
+            Delete Appointment
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this appointment?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.toggleConfirmationVisible} color="primary" variant="outlined">
+              Cancel
+            </Button>
+            <Button onClick={this.commitDeletedAppointment} color="secondary" variant="outlined">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <StyledFab
+          color="secondary"
+          className={classes.addButton}
+          onClick={() => {
+            this.setState({ editingFormVisible: true });
+            this.onEditingAppointmentChange(undefined);
+            this.onAddedAppointmentChange({
+              startDate: new Date(currentDate).setHours(startDayHour),
+              endDate: new Date(currentDate).setHours(startDayHour + 1),
+            });
+          }}
+        >
+          <AddIcon />
+        </StyledFab>
+      </Paper>
+    );
+  }
 }
-
-export default SchedulingComponent;
-
-
