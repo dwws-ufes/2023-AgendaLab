@@ -5,9 +5,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #1f2d40 !important
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.p-tabview .p-tabview-panels {
+  background: #1f2d40 !important;
+}
+
+.p-tabview-nav {
+  display: none !important;
+}
+
+.p-datatable-tbody{
+  background: white !important;
 }
