@@ -5,6 +5,7 @@ import HeaderComponent from '../components/headerComponent';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { appointments } from '../demo/appointments';
 import DataTableComponent from '../components/dataTable';
+import TabViewComponent from '../components/tabView';
 
 function SchedulingPage() {
 
@@ -14,6 +15,17 @@ function SchedulingPage() {
     'id',
     'location'
   ]
+
+  const renderPage = () => {
+    switch(activeIndex) {
+      case 0:
+        return <SchedulingComponent/>;
+      case 1:
+        return <DataTableComponent products={appointments} collumns={titles}/>
+      case 2:
+        return <TabViewComponent/>
+    }
+  }
 
   return (
     <div className='vh-100'>
@@ -36,22 +48,9 @@ function SchedulingPage() {
           </div>
         </div>
         <div className='w-75' style={{overflow:"auto"}}>
-        <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
-          <TabPanel>
-            <SchedulingComponent/>
-          </TabPanel>
-          <TabPanel>
-              <DataTableComponent products={appointments} collumns={titles}/>
-          </TabPanel>
-          <TabPanel>
-              <p className="m-0">
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti 
-                  quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-                  culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. 
-                  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-              </p>
-          </TabPanel>
-        </TabView>
+          <div className='p-2'>
+            {renderPage()}
+          </div>
         </div>
       </div>
     </div>
