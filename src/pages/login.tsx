@@ -10,7 +10,6 @@ function LoginPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
 
-
   const navigateToScheduling = () => {
     navigate("/scheduling");
   };
@@ -19,7 +18,6 @@ function LoginPage() {
     email: '',
     password: '',
   }
-
 
   const onSubmit = (data: any) => {
     setFormData(data);
@@ -36,7 +34,7 @@ function LoginPage() {
 
       <div className="w-50 d-flex align-items-center justify-content-center ">
         <div>
-          <h1>Login</h1>
+          <h1 className="text-white">Login</h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
             <div className="field py-4">
