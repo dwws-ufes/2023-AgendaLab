@@ -2,6 +2,8 @@
 
 # ================= Back End ================= #
 backend/agendalab/__pycache__
+backend/scheduler/__pycache__
+backend/scheduler/migrations/__pycache__
 
 # ================= Front End ================= #
 # dependencies
