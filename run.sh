@@ -1,13 +1,14 @@
-!/bin/bash
+#!/bin/bash
 
 front_port=4040
 back_port=3030
 
 function back_install_deps(){
-	pip install -r requirements.txt || pip3 install -r requirements.txt
+	pip install virtualenv || pip3 install virtualenv
 }
 
 function back_run_server(){
+	source ./backend/venv/bin/activate #Activate environment
 	open "http://127.0.0.1:$back_port"
 	python ./backend/manage.py runserver "$back_port" || python3 ./backend/manage.py runserver "$back_port"
 }
