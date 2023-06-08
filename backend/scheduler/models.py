@@ -21,7 +21,7 @@ class Admin(User):
 
 class Department(models.Model):
     name = models.CharField("Name", max_length=200)
-    code = models.IntegerField("Code")
+    code = models.CharField("Code",max_length=10)
 
     def __str__(self):
         return self.name
