@@ -63,6 +63,8 @@ class Laboratory(models.Model):
         return self.created_by.name
 
 class Scheduling(models.Model):
+    created_by = models.ForeignKey(Teacher,on_delete=models.PROTECT)
+    laboratory = models.ForeignKey(Laboratory,on_delete=models.PROTECT)
     active = models.BooleanField(null=True)
     repeat = models.BooleanField(null=True)
     description = models.CharField(max_length=1000)
