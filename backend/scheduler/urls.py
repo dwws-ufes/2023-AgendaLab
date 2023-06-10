@@ -13,4 +13,6 @@ urlpatterns = [
     re_path(r'^api/department/([0-9])$', views.departments_detail),
     re_path(r'^api/laboratory/$', views.laboratories_list),
     re_path(r'^api/laboratory/([0-9])$', views.laboratories_detail),
+    re_path(r'^api/user/$', views.users_list),
+    re_path(r'^api/user/([0-9])$', views.users_detail),
 ]

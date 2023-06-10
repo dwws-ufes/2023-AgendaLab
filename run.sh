@@ -8,7 +8,7 @@ function back_install_deps(){
 }
 
 function back_run_server(){
-	source ./backend/venv/bin/activate #Activate environment
+	# source ./backend/venv/bin/activate #Activate environment
 	open "http://127.0.0.1:$back_port"
 	python ./backend/manage.py runserver "$back_port" || python3 ./backend/manage.py runserver "$back_port"
 }
