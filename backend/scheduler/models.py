@@ -63,11 +63,13 @@ class Laboratory(models.Model):
         return self.created_by.name
 
 class Scheduling(models.Model):
-    created_by = models.ForeignKey(Teacher,on_delete=models.PROTECT)
+    # Instances
     laboratory = models.ForeignKey(Laboratory,on_delete=models.PROTECT)
+    created_by = models.ForeignKey(Teacher,on_delete=models.PROTECT)
+    # Scheduling Information
     active = models.BooleanField(null=False)
     description = models.CharField(max_length=1000)
-    initial_time = models.DateField()
+    start_time = models.DateField()
     end_time = models.DateField()
     # Repeated Scheduling
     repeat = models.BooleanField(null=True)
@@ -77,14 +79,16 @@ class Scheduling(models.Model):
         if self.repeat:
             # When a RepeatedScheduling is created, we need a admin aproval to set super.active as true
             self.active = False
+        else:
+            self.active = True
 
 
     def save(self, *args, **kwargs):
         # Ensure that initial time and end time are in the same day
-        if self.initial_time != self.end_time:
+        if self.start_time != self.end_time:
             raise ValueError("Initial time and end time must be on the same day")
         # Ensure That initial time and end time are between department opening time and closing time
-        if self.initial_time < self.laboratory.created_by.opening_time or self.end_time > self.laboratory.created_by.closing_time:
+        if self.start_time < self.laboratory.created_by.opening_time or self.end_time > self.laboratory.created_by.closing_time:
             raise ValueError("Initial time and end time must be between department opening time and closing time")
 
         # Ensure that repeat_until must be filled if the scheduling is RepeatedScheduling
