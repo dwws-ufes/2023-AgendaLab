@@ -16,6 +16,10 @@ class Teacher(User):
 
 class Admin(User):
 
+    def approve_scheduling(self, scheduling):
+        scheduling.active = True
+        scheduling.save()
+
     def __str__(self):
         return super().name
 
