@@ -30,7 +30,12 @@ back_run_server(){
 }
 
 front_install_deps(){
-	npm install
+	if [ ! -d "node_modules" ]; then
+		echo "Installing frontend dependencies..."
+		cd ./frontend/
+		npm install
+		cd .. 
+	fi
 }
 
 front_run_server(){
@@ -50,7 +55,7 @@ main(){
 	trap 'kill_process' SIGINT
 
 	back_install_deps
- 	# front_install_deps
+ 	front_install_deps
 
 	back_run_server &
 	front_run_server &
