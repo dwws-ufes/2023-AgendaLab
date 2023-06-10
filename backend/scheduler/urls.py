@@ -1,8 +1,9 @@
 from django.urls import path, re_path
+from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', admin.site.urls), # Admin page as default page
     re_path(r'^api/scheduler/$', views.schedules_list),
     re_path(r'^api/scheduler/([0-9])$', views.schedules_detail),
     re_path(r'^api/teacher/$', views.teachers_list),

@@ -1,2 +1,7 @@
 # 2023-AgendaLab
-Assignment for the 2023 edition of the "Web Development and the Semantic Web" course, by Cristiane Scarpat de Sá, Hiuri Carriço Liberato, Joao Pedro Milli Biancardi and Lucas Rodrigues de Almeida
+
+### Running and Installing Dependencies
+Open your `terminal` in root folder and type
+```
+chmod +x run.sh && ./run.sh
+```
