@@ -34,11 +34,13 @@ class Laboratory(models.Model):
     has_blackboard = models.BooleanField("True if it has blackboard")
     created_by = models.ForeignKey(Department,on_delete=models.PROTECT)
     
+    # Initialize the code of the laboratory
     def __init__(self):
         self.code = self.generate_unique_code()
 
+    # Generate a unique code based on the department code and the number of laboratories
     def generate_unique_code(self):
-        code = str(self.created_by)
+        code = self.created_by.code
         number = len(Laboratory.objects.all())
         code += str(number)
         return code
