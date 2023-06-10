@@ -22,6 +22,18 @@ class Admin(User):
 class Department(models.Model):
     code = models.CharField("Code",max_length=10,primary_key=True)
     name = models.CharField("Name", max_length=200)
+    opening_time = models.TimeField("Opening Time")
+    closing_time = models.TimeField("Closing Time")
+
+    def save(self, *args, **kwargs):
+        # Ensure that opening time is before closing time and that both are in the same day
+        if self.opening_time > self.closing_time:
+            raise ValueError("Opening time must be before closing time")
+        # Ensure that opening time and closing time are in the same day
+        if self.opening_time.day != self.closing_time.day:
+            raise ValueError("Opening time and closing time must be in the same day")
+
+        super(Department, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
