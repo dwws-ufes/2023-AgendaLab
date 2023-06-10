@@ -1,0 +1,3 @@
+django
+django-stubs
+djangorestframework
