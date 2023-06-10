@@ -17,7 +17,7 @@ def create_data(apps,schema_editor):
 
     Department(code="INF", name="Informatica", opening_time="08:00:00", closing_time="22:00:00").save()
 
-    Laboratory(name="LABGRAD 1", num_computers=20, has_blackboard=True, created_by=Department.objects.get(code="INF")).save()
+    Laboratory(num_computers=20, has_blackboard=True, created_by=Department.objects.get(code="INF")).save()
 
     # Unique Scheduling
     Scheduling(teacher=Teacher.objects.get(register="202301"),
