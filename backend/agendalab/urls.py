@@ -15,10 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include,path
+from django.urls import include,path, re_path
+from scheduler import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('scheduler/', include('scheduler.urls')),
-    path("",include('scheduler.urls')),
+    path('', include('scheduler.urls')), # Home page
+    re_path(r'^api/scheduler/$', views.schedules_list),
+    re_path(r'^api/scheduler/([0-9])$', views.schedules_detail),
 ]
