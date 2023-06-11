@@ -8,8 +8,40 @@ from rest_framework import status
 from .models import Scheduling, Teacher, Admin, Department, Laboratory
 from .serializers import *
 
-def index(request):
-    return HttpResponse("Hello, World!")
+@api_view(['GET'])
+def get_routes(request):
+    routes = [
+        {
+            'Entities': ['Scheduling', 'Teacher', 'Admin', 'Department', 'Laboratory', 'User'],
+        },
+        {
+            'Endpoint': '/entity/',
+            'method': 'GET',
+            'description': 'Returns an array of entity'
+        },
+        {
+            'Endpoint': '/entity/id',
+            'method': 'GET',
+            'description': 'Returns a single entity object'
+        },
+        {
+            'Endpoint': '/entity/create/',
+            'method': 'POST',
+            'description': 'Creates new entity with post request'
+        },
+        {
+            'Endpoint': '/entity/id/update/',
+            'method': 'PUT',
+            'description': 'Update entity with data sent in post request'
+        },
+        {
+            'Endpoint': '/entity/id/delete/',
+            'method': 'DELETE',
+            'description': 'Deletes and exiting entity'
+        },
+    ]
+
+    return Response(routes)
 
 @api_view(['GET', 'POST'])
 def schedules_list(request):
@@ -28,12 +60,16 @@ def schedules_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET','PUT', 'DELETE'])
 def schedules_detail(request, pk):
     try:
         schedule = Scheduling.objects.get(pk=pk)
     except Scheduling.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = SchedulingSerializer(schedule,context={'request': request})
+        return Response(serializer.data)
 
     if request.method == 'PUT':
         serializer = SchedulingSerializer(schedule, data=request.data,context={'request': request})
@@ -48,6 +84,7 @@ def schedules_detail(request, pk):
 
 @api_view(['GET', 'POST'])
 def teachers_list(request):
+
     if request.method == 'GET':
         data = Teacher.objects.all()
 
@@ -63,12 +100,16 @@ def teachers_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET','PUT', 'DELETE'])
 def teachers_detail(request, pk):
     try:
         teacher = Teacher.objects.get(pk=pk)
     except Teacher.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = TeacherSerializer(teacher,context={'request': request})
+        return Response(serializer.data)
 
     if request.method == 'PUT':
         serializer = TeacherSerializer(teacher, data=request.data,context={'request': request})
@@ -98,12 +139,16 @@ def admins_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def admins_detail(request, pk):
     try:
         admin = Admin.objects.get(pk=pk)
     except Admin.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = AdminSerializer(admin,context={'request': request})
+        return Response(serializer.data)
 
     if request.method == 'PUT':
         serializer = AdminSerializer(admin, data=request.data,context={'request': request})
@@ -133,12 +178,16 @@ def departments_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def departments_detail(request, pk):
     try:
         department = Department.objects.get(pk=pk)
     except Department.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = DepartmentSerializer(department,context={'request': request})
+        return Response(serializer.data)
 
     if request.method == 'PUT':
         serializer = DepartmentSerializer(department, data=request.data,context={'request': request})
@@ -168,12 +217,16 @@ def laboratories_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def laboratories_detail(request, pk):
     try:
         laboratory = Laboratory.objects.get(pk=pk)
     except Laboratory.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = LaboratorySerializer(laboratory,context={'request': request})
+        return Response(serializer.data)
 
     if request.method == 'PUT':
         serializer = LaboratorySerializer(laboratory, data=request.data,context={'request': request})
@@ -203,12 +256,16 @@ def users_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def users_detail(request, pk):
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user,context={'request': request})
+        return Response(serializer.data)
 
     if request.method == 'PUT':
         serializer = UserSerializer(user, data=request.data,context={'request': request})
