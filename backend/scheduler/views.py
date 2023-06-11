@@ -12,7 +12,9 @@ from .serializers import *
 def get_routes(request):
     routes = [
         {
-            'Entities': ['Scheduling', 'Teacher', 'Admin', 'Department', 'Laboratory', 'User'],
+            'Entities': ['schedule', 'teacher', 'admin', 'department', 'laboratory', 'user'],
+            'Entrypoint': '/request/',
+            'Example': 'http://127.0.0.1:8000/request/user/',
         },
         {
             'Endpoint': '/entity/',
@@ -37,7 +39,7 @@ def get_routes(request):
         {
             'Endpoint': '/entity/id/delete/',
             'method': 'DELETE',
-            'description': 'Deletes and exiting entity'
+            'description': 'Deletes an existing entity'
         },
     ]
 
