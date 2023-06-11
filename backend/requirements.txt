@@ -2,3 +2,4 @@ django
 django-stubs
 djangorestframework
 django-cors-headers
+django-crontab
