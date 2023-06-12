@@ -26,12 +26,15 @@ def create_data(apps,schema_editor):
                start_time='2023-06-12 12:00:00',
                end_time='2023-06-12 14:00:00').save()
 
-    # Other sheduling
-    Scheduling(teacher=Teacher.objects.get(register="202302"),
+
+    # Unique Scheduling
+    Scheduling(created_by=Teacher.objects.get(register="202301"),
                laboratory=Laboratory.objects.get(code="INF"),
-               description="Other description",
-               start_time='2023-07-12 14:00:00',
-               end_time='2023-07-12 16:00:00').save()
+               description="Second unique scheduling",
+               start_time='2023-06-12 17:00:00',
+               end_time='2023-06-12 19:00:00',
+               repeat=False).save()
+
     
 
 class Migration(migrations.Migration):

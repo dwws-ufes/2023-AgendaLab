@@ -44,7 +44,7 @@ class Department(models.Model):
 
 class Laboratory(models.Model):
     created_by = models.ForeignKey(Department,on_delete=models.PROTECT)
-    code = models.CharField("Code", max_length=20, default="")
+    code = models.CharField("Code", max_length=20, default="", unique=True, null=True, blank=True)
     num_computers = models.IntegerField("Number of Computers")
     has_blackboard = models.BooleanField("True if it has blackboard")
     
