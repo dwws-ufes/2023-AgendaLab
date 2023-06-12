@@ -23,14 +23,15 @@ def create_data(apps,schema_editor):
     Scheduling(teacher=Teacher.objects.get(register="202301"),
                laboratory=Laboratory.objects.get(code="INF"),
                description="First unique scheduling",
-               start_time="19:00:00",
-               end_time="20:00:00").save()
-    # Repeated Scheduling
-    Scheduling(teacher=Teacher.objects.get(register="202301"),
+               start_time='2023-06-12 12:00:00',
+               end_time='2023-06-12 14:00:00').save()
+
+    # Other sheduling
+    Scheduling(teacher=Teacher.objects.get(register="202302"),
                laboratory=Laboratory.objects.get(code="INF"),
-               description= "First repeated scheduling",
-               start_time="19:00:00", end_time="20:00:00",
-               repeat=True, repeat_until=date(2023,6,8)).save()
+               description="Other description",
+               start_time='2023-07-12 14:00:00',
+               end_time='2023-07-12 16:00:00').save()
     
 
 class Migration(migrations.Migration):

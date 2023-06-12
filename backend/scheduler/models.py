@@ -66,35 +66,33 @@ class Laboratory(models.Model):
         return self.code
 
 class Scheduling(models.Model):
+    # Code for this scheduling
+    code = models.CharField("Code", max_length=20, default="")
     # Instances
     laboratory = models.ForeignKey(Laboratory,on_delete=models.PROTECT, null=True)
     created_by = models.ForeignKey(Teacher,on_delete=models.PROTECT, null=True)
     # Scheduling Information
-    active = models.BooleanField(null=False)
+    title = models.CharField(max_length=200,default="")
     description = models.CharField(max_length=1000)
-    start_time = models.DateField()
-    end_time = models.DateField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
     # Repeated Scheduling
     repeat = models.BooleanField(null=True)
-    repeat_until = models.DateField(null=True)
 
-    def __init__(self):
-        if self.repeat:
-            # When a RepeatedScheduling is created, we need a admin aproval to set super.active as true
-            self.active = False
-        else:
-            self.active = True
+    def generate_unique_code(self):
+        number = len(Scheduling.objects.all())
+        while Scheduling.objects.filter(code=number).exists():
+            number += 1
+        return number
 
     def save(self, *args, **kwargs):
+        # Assign a unique code to this scheduling
+        self.code = self.generate_unique_code()
         # Ensure that initial time and end time are in the same day
         if self.start_time != self.end_time:
             raise ValueError("Initial time and end time must be on the same day")
         # Ensure That initial time and end time are between department opening time and closing time
         if self.start_time < self.laboratory.created_by.opening_time or self.end_time > self.laboratory.created_by.closing_time:
             raise ValueError("Initial time and end time must be between department opening time and closing time")
-        # Ensure that repeat_until must be filled if the scheduling
-        if self.repeat == True:
-            if self.repeat_until == None:
-                raise ValueError("repeat_until must be filled")
 
         super().save(*args, **kwargs)
