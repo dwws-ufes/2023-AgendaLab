@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'scheduler',
     'rest_framework',
     'corsheaders', # Enable Corsheaders
-    
-    
 ]
 
 MIDDLEWARE = [
