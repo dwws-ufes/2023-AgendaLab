@@ -67,7 +67,7 @@ class Laboratory(models.Model):
 
 class Scheduling(models.Model):
     # Code for this scheduling
-    code = models.CharField("Code", max_length=20, default="")
+    code = models.IntegerField("Code", unique=False, null=True, blank=True)
     # Instances
     laboratory = models.ForeignKey(Laboratory,on_delete=models.PROTECT, null=True)
     created_by = models.ForeignKey(Teacher,on_delete=models.PROTECT, null=True)
@@ -89,10 +89,10 @@ class Scheduling(models.Model):
         # Assign a unique code to this scheduling
         self.code = self.generate_unique_code()
         # Ensure that initial time and end time are in the same day
-        if self.start_time != self.end_time:
+        if self.start_time.date() != self.end_time.date():
             raise ValueError("Initial time and end time must be on the same day")
         # Ensure That initial time and end time are between department opening time and closing time
-        if self.start_time < self.laboratory.created_by.opening_time or self.end_time > self.laboratory.created_by.closing_time:
-            raise ValueError("Initial time and end time must be between department opening time and closing time")
+        # if self.start_time.time() < self.laboratory.created_by.opening_time or self.end_time.time() > self.laboratory.created_by.closing_time:
+        #     raise ValueError("Initial time and end time must be between department opening time and closing time")
 
         super().save(*args, **kwargs)
