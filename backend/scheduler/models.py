@@ -50,7 +50,7 @@ class Laboratory(models.Model):
     # Generate a unique code based on the department code and the number of laboratories
     def generate_unique_code(self):
         code = self.created_by.code
-        number = len(Laboratory.objects.all())
+        number = len(Laboratory.objects.filter(created_by=self.created_by))
         code += str(number)
         while Laboratory.objects.filter(code=code).exists():
             number += 1
