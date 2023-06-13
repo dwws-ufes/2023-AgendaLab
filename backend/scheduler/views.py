@@ -57,6 +57,10 @@ def make_scheduling(request):
     if request.method == 'POST':
         for schedule in request.data:
             serializer = SchedulingSerializer(data=schedule)
+            # verify if interval is unique of between start_time and end_time
+            if Scheduling.objects.filter(laboratory=schedule['laboratory'], start_time__lte=schedule['start_time'], end_time__gte=schedule['end_time']).exists():
+                return Response({'error': 'Interval already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
             if serializer.is_valid():
                 serializer.save()
             else:
