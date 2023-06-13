@@ -51,13 +51,10 @@ def get_routes(request):
     return Response(routes)
 
 #Requered login for this POST request
+@login_required
 @api_view(['POST'])
 def make_scheduling(request):
-    repeat = request.GET.get('repeat', 0)
-
-    print(f'REPEAT: {repeat}')
-    if request.method == 'POST' and repeat:
-        print("CODE 1")
+    if request.method == 'POST':
         for schedule in request.data:
             serializer = SchedulingSerializer(data=schedule)
             if serializer.is_valid():
@@ -65,15 +62,6 @@ def make_scheduling(request):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_201_CREATED)
-
-    elif request.method == 'POST' and not repeat:
-        print("CODE 2")
-        serializer = SchedulingSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def schedules_list(request):
