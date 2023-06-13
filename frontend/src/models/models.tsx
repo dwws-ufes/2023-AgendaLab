@@ -1,9 +1,10 @@
 export interface Scheduling {
-    id: number;
-    desc: string;
-    startDate: Date;
-    endDate: Date;
-    title: string;
-    lab?: number;
-    teacher?: number;
+  id: number;
+  notes: string;
+  startDate: Date;
+  endDate: Date;
+  title: string;
+  lab?: number;
+  teacher?: number;
+  rRule: string;
 }

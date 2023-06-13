@@ -1,9 +1,8 @@
-
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
-import Grid from '@mui/material/Grid';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import Grid from "@mui/material/Grid";
 import {
   Scheduler,
   Toolbar,
@@ -19,17 +18,18 @@ import {
   TodayButton,
   DateNavigator,
   DayView,
-} from '@devexpress/dx-react-scheduler-material-ui';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+} from "@devexpress/dx-react-scheduler-material-ui";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import SchedulingController from "../controllers/SchedulingController";
 
-const PREFIX = 'Demo';
+const PREFIX = "Demo";
 const classes = {
   content: `${PREFIX}-content`,
   header: `${PREFIX}-header`,
@@ -45,7 +45,7 @@ const classes = {
 
 const StyledFab = styled(Fab)(({ theme }) => ({
   [`&.${classes.addButton}`]: {
-    position: 'absolute',
+    position: "absolute",
     bottom: theme.spacing(3),
     right: theme.spacing(4),
   },
@@ -55,10 +55,9 @@ export default class SchedulingComponent extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    console.log(props)
     this.state = {
       data: props.schedulings,
-      currentDate: '2018-06-27',
+      currentDate: "2018-06-27",
       confirmationVisible: false,
       editingFormVisible: false,
       deletedAppointmentId: undefined,
@@ -72,10 +71,12 @@ export default class SchedulingComponent extends React.PureComponent {
 
     this.toggleConfirmationVisible = this.toggleConfirmationVisible.bind(this);
     this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this);
-    this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this);
+    this.toggleEditingFormVisibility =
+      this.toggleEditingFormVisibility.bind(this);
 
     this.commitChanges = this.commitChanges.bind(this);
-    this.onEditingAppointmentChange = this.onEditingAppointmentChange.bind(this);
+    this.onEditingAppointmentChange =
+      this.onEditingAppointmentChange.bind(this);
     this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this);
   }
 
@@ -117,7 +118,9 @@ export default class SchedulingComponent extends React.PureComponent {
   commitDeletedAppointment() {
     this.setState((state) => {
       const { data, deletedAppointmentId } = state;
-      const nextData = data.filter(appointment => appointment.id !== deletedAppointmentId);
+      const nextData = data.filter(
+        (appointment) => appointment.id !== deletedAppointmentId
+      );
 
       return { data: nextData, deletedAppointmentId: null };
     });
@@ -125,15 +128,21 @@ export default class SchedulingComponent extends React.PureComponent {
   }
 
   commitChanges({ added, changed, deleted }) {
-    this.setState((state) => {
+    this.setState(async (state) => {
       let { data } = state;
       if (added) {
-        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        const startingAddedId =
+          data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
+
+        await SchedulingController.registerScheduling(added);
       }
       if (changed) {
-        data = data.map(appointment => (
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+        data = data.map((appointment) =>
+          changed[appointment.id]
+            ? { ...appointment, ...changed[appointment.id] }
+            : appointment
+        );
       }
       if (deleted !== undefined) {
         this.setDeletedAppointmentId(deleted);
@@ -191,10 +200,11 @@ export default class SchedulingComponent extends React.PureComponent {
       );
     };
 
-    const Content = (({
-      children, appointmentData, ...restProps
-    }) => (
-      <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
+    const Content = ({ children, appointmentData, ...restProps }) => (
+      <AppointmentTooltip.Content
+        {...restProps}
+        appointmentData={appointmentData}
+      >
         <Grid container alignItems="center">
           <Grid item xs={10}>
             <span>{appointmentData.location}</span>
@@ -202,34 +212,24 @@ export default class SchedulingComponent extends React.PureComponent {
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>
-    ));
+    );
 
     return (
       <Paper>
-        <Scheduler
-          data={data}
-        >
-          <ViewState
-                defaultCurrentDate="2018-07-27"
-            />
+        <Scheduler data={data}>
+          <ViewState defaultCurrentDate="2018-07-27" />
           <EditingState
             onCommitChanges={this.commitChanges}
             onEditingAppointmentChange={this.onEditingAppointmentChange}
             onAddedAppointmentChange={this.onAddedAppointmentChange}
           />
-          <DayView
-                startDayHour={0}
-                endDayHour={24}
-            />
-          <WeekView
-            startDayHour={startDayHour}
-            endDayHour={endDayHour}
-          />
+          <DayView startDayHour={0} endDayHour={24} />
+          <WeekView startDayHour={startDayHour} endDayHour={endDayHour} />
           <MonthView />
           <AllDayPanel />
           <EditRecurrenceMenu />
-          <Appointments 
-            appointmentContentComponent={AppointmentContent} 
+          <Appointments
+            appointmentContentComponent={AppointmentContent}
             // appointmentContentComponent={AppointmentContent}
           />
           <AppointmentTooltip
@@ -249,23 +249,26 @@ export default class SchedulingComponent extends React.PureComponent {
           <DragDropProvider />
         </Scheduler>
 
-        <Dialog
-          open={confirmationVisible}
-          onClose={this.cancelDelete}
-        >
-          <DialogTitle>
-            Delete Appointment
-          </DialogTitle>
+        <Dialog open={confirmationVisible} onClose={this.cancelDelete}>
+          <DialogTitle>Delete Appointment</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Are you sure you want to delete this appointment?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.toggleConfirmationVisible} color="primary" variant="outlined">
+            <Button
+              onClick={this.toggleConfirmationVisible}
+              color="primary"
+              variant="outlined"
+            >
               Cancel
             </Button>
-            <Button onClick={this.commitDeletedAppointment} color="secondary" variant="outlined">
+            <Button
+              onClick={this.commitDeletedAppointment}
+              color="secondary"
+              variant="outlined"
+            >
               Delete
             </Button>
           </DialogActions>
