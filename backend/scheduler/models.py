@@ -3,12 +3,25 @@ from django.db import models
 class User(models.Model):
     name = models.CharField("Name", max_length=200)
     email = models.EmailField()
+    # re_path(r'^api/scheduler/$', views.schedules_list),
+    # re_path(r'^api/scheduler/([0-9])$', views.schedules_detail),
+    # re_path(r'^api/teacher/$', views.teachers_list),
+    # re_path(r'^api/teacher/([0-9])$', views.teachers_detail),
+    # re_path(r'^api/admin/$', views.admins_list),
+    # re_path(r'^api/admin/([0-9])$', views.admins_detail),
+    # re_path(r'^api/department/$', views.departments_list),
+    # re_path(r'^api/department/([0-9])$', views.departments_detail),
+    # re_path(r'^api/laboratory/$', views.laboratories_list),
+    # re_path(r'^api/laboratory/([0-9])$', views.laboratories_detail),
+    # re_path(r'^api/user/$', views.users_list),
+    # re_path(r'^api/user/([0-9])$', views.users_detail),
     password = models.CharField("Password", max_length=200)
 
     def __str__(self):
         return self.name
 
 class Teacher(User):
+    department = models.ForeignKey("Department", on_delete=models.PROTECT)
     register = models.IntegerField("Register")
 
     def __str__(self):
@@ -69,8 +82,8 @@ class Scheduling(models.Model):
     # Code for this scheduling
     code = models.IntegerField("Code", unique=False, null=True, blank=True)
     # Instances
-    laboratory = models.ForeignKey(Laboratory,on_delete=models.PROTECT, null=True)
-    created_by = models.ForeignKey(Teacher,on_delete=models.PROTECT, null=True)
+    laboratory = models.ForeignKey(Laboratory,on_delete=models.CASCADE, null=True)
+    created_by = models.ForeignKey(Teacher,on_delete=models.CASCADE , null=True)
     # Scheduling Information
     title = models.CharField(max_length=200,default="")
     description = models.CharField(max_length=1000)
