@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'scheduler',
     'rest_framework',
     'corsheaders', # Enable Corsheaders
+    'django_injector', # Enable Django Injector
 ]
 
 MIDDLEWARE = [

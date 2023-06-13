@@ -2,6 +2,15 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+from injector import inject
+
+class EmailService:
+    def send_email(self, body, subject):
+        print(f"Enviando e-mail com o assunto: {subject}")
+        print("Corpo do e-mail:")
+        print(body)
+        print("Email enviado com sucesso")
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -109,12 +118,19 @@ class Scheduling(models.Model):
         if self.start_time and self.end_time and self.start_time.time() >= self.end_time.time():
             raise ValidationError("Start time must be before end time")
 
-    def save(self, *args, **kwargs):
+    def send_email(self, email_service: EmailService):
+        email_service.send_email("Agendamento Concluido", "Corpo do Agendamento")
+
+    @inject
+    def save(self, email_service: EmailService = EmailService(), *args, **kwargs):
         # Assign a unique code to this scheduling
         self.code = self.generate_unique_code()
         # Ensure that initial time and end time are in the same day
         if self.start_time.date() != self.end_time.date():
             raise ValueError("Initial time and end time must be on the same day")
+
+        email_service.send_email("Agendamento Concluido", "Corpo do Agendamento")
+
         # Ensure That initial time and end time are between department opening time and closing time
         # if self.start_time.time() < self.laboratory.created_by.opening_time or self.end_time.time() > self.laboratory.created_by.closing_time:
         #     raise ValueError("Initial time and end time must be between department opening time and closing time")
@@ -122,5 +138,7 @@ class Scheduling(models.Model):
         #     raise ValueError("Initial time must be after department opening time")
         # if self.end_time.time() > self.laboratory.created_by.closing_time:
         #     raise ValueError("End time must be before department closing time")
+
+
 
         super().save(*args, **kwargs)
