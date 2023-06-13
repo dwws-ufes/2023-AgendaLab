@@ -11,7 +11,10 @@ class LaboratoryAdmin(admin.ModelAdmin):
 class SchedulingAdmin(admin.ModelAdmin):
     exclude = ['code']
 
-admin.site.register(User)
+class UserAdmin(admin.ModelAdmin):
+    exclude = ['last_login']
+
+admin.site.register(User,UserAdmin)
 admin.site.register(Teacher)
 admin.site.register(Admin)
 admin.site.register(Department)

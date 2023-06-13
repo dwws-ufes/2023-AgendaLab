@@ -9,8 +9,9 @@ from .models import Scheduling, Teacher, Admin, Department, Laboratory
 from .serializers import *
 
 #Django security
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.decorators import login_required, permission_required
 
 @api_view(['GET'])
 def get_routes(request):
@@ -49,7 +50,32 @@ def get_routes(request):
 
     return Response(routes)
 
-@api_view(['GET', 'POST'])
+#Requered login for this POST request
+@api_view(['POST'])
+def make_scheduling(request):
+    repeat = request.GET.get('repeat', 0)
+
+    print(f'REPEAT: {repeat}')
+    if request.method == 'POST' and repeat:
+        print("CODE 1")
+        for schedule in request.data:
+            serializer = SchedulingSerializer(data=schedule)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_201_CREATED)
+
+    elif request.method == 'POST' and not repeat:
+        print("CODE 2")
+        serializer = SchedulingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
 def schedules_list(request):
     if request.method == 'GET':
         data = Scheduling.objects.all()
@@ -57,14 +83,6 @@ def schedules_list(request):
         serializer = SchedulingSerializer(data, context={'request': request}, many=True)
 
         return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = SchedulingSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT', 'DELETE'])
 def schedules_detail(request, pk):
@@ -296,6 +314,15 @@ def login(request):
         return Response("Invalid credentials", status=400)
 
     if (user is not None) and check_password(password,user.password):
+        #Login if user exists and password is correct
+        auth_login(request,user)
+        # print(f"User authenticated = {request.user.is_authenticated}")
         return Response("User authenticated with success", status= 200)
     else:
         return Response("Invalid credentials", status=400)
+
+@login_required
+@api_view(['POST'])
+def logout(request):
+    auth_logout(request)
+    return Response("User logged out with success", status=200)

@@ -29,8 +29,8 @@ login(){
 
 
 main(){
-	createUser "Fulano Senha Fraca" "fulano@email.com" "senhafraca321"
-	login "fulano@email.com" "senhafraca321"
+	createUser "SSSicl Senha Fraca" "ssa@email.com" "senhafraca321"
+	login "ssa@email.com" "senhafraca321"
 }
 
 main

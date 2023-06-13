@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.get_routes), # Default Route values
     path('request/', views.get_routes), # Default Route values
     path('request/schedule/', views.schedules_list),
+    path('request/schedule/create/', views.make_scheduling),
     path('request/schedule/<int:pk>/', views.schedules_detail),
     path('request/teacher/', views.teachers_list),
     path('request/teacher/<int:pk>/', views.teachers_detail),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('request/user/', views.users_list),
     path('request/user/<int:pk>/', views.users_detail),
     path('request/login/',views.login),
+    path('request/logout/',views.logout),
 ]
