@@ -1,15 +1,27 @@
-import React from 'react';
+import  { useEffect } from 'react';
 import {useState} from 'react'
 import SchedulingComponent from '../components/scheduler';
 import HeaderComponent from '../components/headerComponent';
-import { TabView, TabPanel } from 'primereact/tabview';
-import { appointments } from '../demo/appointments';
 import DataTableComponent from '../components/dataTable';
 import TabViewComponent from '../components/tabView';
+import SchedulingController from '../controllers/SchedulingController'
+import { Scheduling } from '../models/models';
 
 function SchedulingPage() {
 
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const [schedulings, setSchedulings] = useState<Scheduling[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const schedulingsList = await SchedulingController.listSchedulings()
+      if (schedulingsList) {
+        setSchedulings(schedulingsList)
+      }
+    }
+    fetchData();
+  }, [])
 
   const titles = [ 'title',
     'id',
@@ -19,9 +31,9 @@ function SchedulingPage() {
   const renderPage = () => {
     switch(activeIndex) {
       case 0:
-        return <SchedulingComponent/>;
+        return <SchedulingComponent schedulings={schedulings}/>;
       case 1:
-        return <DataTableComponent products={appointments} collumns={titles}/>
+        return <DataTableComponent products={schedulings} collumns={titles}/>
       case 2:
         return <TabViewComponent/>
     }

@@ -29,8 +29,6 @@ import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
-import { appointments } from '../demo/appointments';
-
 const PREFIX = 'Demo';
 const classes = {
   content: `${PREFIX}-content`,
@@ -56,8 +54,10 @@ const StyledFab = styled(Fab)(({ theme }) => ({
 export default class SchedulingComponent extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    console.log(props)
     this.state = {
-      data: appointments,
+      data: props.schedulings,
       currentDate: '2018-06-27',
       confirmationVisible: false,
       editingFormVisible: false,
