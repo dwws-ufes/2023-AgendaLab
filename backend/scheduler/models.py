@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class User(models.Model):
     name = models.CharField("Name", max_length=200)
@@ -9,17 +10,13 @@ class User(models.Model):
         return self.name
 
 class Teacher(User):
-    department = models.ForeignKey("Department", on_delete=models.PROTECT)
+    department = models.ForeignKey("Department", on_delete=models.PROTECT, null=True)
     register = models.IntegerField("Register")
 
     def __str__(self):
         return super().name
 
 class Admin(User):
-
-    def approve_scheduling(self, scheduling):
-        scheduling.active = True
-        scheduling.save()
 
     def __str__(self):
         return super().name
@@ -85,6 +82,10 @@ class Scheduling(models.Model):
         while Scheduling.objects.filter(code=number).exists():
             number += 1
         return number
+
+    def clean(self):
+        if self.start_time >= self.end_time:
+            raise ValidationError("Start time must be before end time")
 
     def save(self, *args, **kwargs):
         # Assign a unique code to this scheduling
