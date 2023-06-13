@@ -5,11 +5,25 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from injector import inject
 
 class EmailService:
-    def send_email(self, body, subject):
-        print(f"Enviando e-mail com o assunto: {subject}")
-        print("Corpo do e-mail:")
+    def send_email(self, subject, body):
+        print(f"Sending email with subject: {subject}")
+        print("Email body:")
         print(body)
-        print("Email enviado com sucesso")
+        print("Email sent successfully")
+
+# Notification service that can be injected into the models and have EmailService injected into it
+class NotificationService:
+    @inject
+    def __init__(self, email_service: EmailService = EmailService()):
+        self.email_service = email_service
+
+    def notify(self, message):
+        print("Sending notification:")
+        print(message)
+        print("Notification sent successfully")
+    
+    def send_email(self, body, subject):
+        self.email_service.send_email(body, subject)
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -122,14 +136,16 @@ class Scheduling(models.Model):
         email_service.send_email("Agendamento Concluido", "Corpo do Agendamento")
 
     @inject
-    def save(self, email_service: EmailService = EmailService(), *args, **kwargs):
+    def save(self, notification_service: NotificationService = NotificationService(), *args, **kwargs):
         # Assign a unique code to this scheduling
         self.code = self.generate_unique_code()
         # Ensure that initial time and end time are in the same day
         if self.start_time.date() != self.end_time.date():
             raise ValueError("Initial time and end time must be on the same day")
 
-        email_service.send_email("Agendamento Concluido", "Corpo do Agendamento")
+        # Dependency Injection of Notification Service
+        notification_service.send_email(f"<SUCESS> {self.title}", f"Your description: {self.description}")
+        notification_service.notify("Scheduling created successfully")
 
         # Ensure That initial time and end time are between department opening time and closing time
         # if self.start_time.time() < self.laboratory.created_by.opening_time or self.end_time.time() > self.laboratory.created_by.closing_time:
