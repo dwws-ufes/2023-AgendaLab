@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 class User(models.Model):
     name = models.CharField("Name", max_length=200)
-    email = models.EmailField()
+    email = models.EmailField("Email", unique=True)
     password = models.CharField("Password", max_length=200)
 
     def __str__(self):
@@ -11,7 +11,7 @@ class User(models.Model):
 
 class Teacher(User):
     department = models.ForeignKey("Department", on_delete=models.PROTECT, null=True)
-    register = models.IntegerField("Register")
+    register = models.IntegerField("Register", unique=True)
 
     def __str__(self):
         return super().name
@@ -31,9 +31,6 @@ class Department(models.Model):
         # Ensure that opening time is before closing time and that both are in the same day
         if self.opening_time > self.closing_time:
             raise ValueError("Opening time must be before closing time")
-        # Ensure that opening time and closing time are in the same day
-        if self.opening_time.day != self.closing_time.day:
-            raise ValueError("Opening time and closing time must be in the same day")
 
         super().save(*args, **kwargs)
 
@@ -84,7 +81,7 @@ class Scheduling(models.Model):
         return number
 
     def clean(self):
-        if self.start_time >= self.end_time:
+        if self.start_time and self.end_time and self.start_time.time() >= self.end_time.time():
             raise ValidationError("Start time must be before end time")
 
     def save(self, *args, **kwargs):
@@ -96,5 +93,9 @@ class Scheduling(models.Model):
         # Ensure That initial time and end time are between department opening time and closing time
         # if self.start_time.time() < self.laboratory.created_by.opening_time or self.end_time.time() > self.laboratory.created_by.closing_time:
         #     raise ValueError("Initial time and end time must be between department opening time and closing time")
+        # if self.start_time.time() < self.laboratory.created_by.opening_time:
+        #     raise ValueError("Initial time must be after department opening time")
+        # if self.end_time.time() > self.laboratory.created_by.closing_time:
+        #     raise ValueError("End time must be before department closing time")
 
         super().save(*args, **kwargs)
