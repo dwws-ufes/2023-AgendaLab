@@ -8,13 +8,16 @@ from rest_framework import status
 from .models import Scheduling, Teacher, Admin, Department, Laboratory
 from .serializers import *
 
+#Django security
+from django.contrib.auth import authenticate
+
 @api_view(['GET'])
 def get_routes(request):
     routes = [
         {
             'Entities': ['schedule', 'teacher', 'admin', 'department', 'laboratory', 'user'],
             'Entrypoint': '/request/',
-            'Example': 'http://127.0.0.1:8000/request/user/',
+            'Example': 'http://127.0.0.1:8080/request/schedule/',
         },
         {
             'Endpoint': '/entity/',
@@ -279,3 +282,15 @@ def users_detail(request, pk):
     elif request.method == 'DELETE':
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+def login(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    user = authenticate(email=email, password=password)
+
+    if user is not None:
+        return Response("User authenticated with success")
+    else:
+        return Response("Invalid credentials", status=400)
