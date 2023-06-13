@@ -10,6 +10,7 @@ from .serializers import *
 
 #Django security
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 
 @api_view(['GET'])
 def get_routes(request):
@@ -287,10 +288,14 @@ def users_detail(request, pk):
 def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
+    print(f"Email = {email}")
+    print(f"Password = {password}")
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response("Invalid credentials", status=400)
 
-    user = authenticate(email=email, password=password)
-
-    if user is not None:
-        return Response("User authenticated with success")
+    if (user is not None) and check_password(password,user.password):
+        return Response("User authenticated with success", status= 200)
     else:
         return Response("Invalid credentials", status=400)

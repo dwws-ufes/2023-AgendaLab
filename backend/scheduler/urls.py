@@ -17,4 +17,5 @@ urlpatterns = [
     path('request/laboratory/<int:pk>/', views.laboratories_detail),
     path('request/user/', views.users_list),
     path('request/user/<int:pk>/', views.users_detail),
+    path('request/login/',views.login),
 ]

@@ -23,9 +23,14 @@ createUser() {
   curl -X POST -H "Content-Type: application/json" -d '{"name":"'"$1"'","email":"'"$2"'","password":"'"$3"'"}' "$backendUrl/request/user/"
 }
 
+login(){
+  curl -X POST -H "Content-Type: application/json" -d '{"email":"'"$1"'","password":"'"$2"'"}' "$backendUrl/request/login/"
+}
+
 
 main(){
 	createUser "Fulano Senha Fraca" "fulano@email.com" "senhafraca321"
+	login "fulano@email.com" "senhafraca321"
 }
 
 main
