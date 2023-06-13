@@ -1,7 +1,7 @@
 #!/bin/bash
 
 front_port=3000
-back_port=8000
+back_port=8080
 
 kill_port(){
 	# Find the process ID (PID) using lsof
