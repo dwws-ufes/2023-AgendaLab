@@ -1,6 +1,5 @@
 class SchedulingService {
   static addScheduling = async (scheduling: any) => {
-    console.log("SCHEDULING => ", JSON.stringify(scheduling));
     const response = await fetch(
       "http://localhost:8080/request/schedule/create/",
       {
