@@ -73,6 +73,8 @@ class SchedulingController {
       desc: scheduling.description,
       startDate: new Date(scheduling.start_time),
       endDate: new Date(scheduling.end_time),
+      laboratory: scheduling.laboratory,
+		  created_by: scheduling.created_by
     }));
     return schedulings;
   };

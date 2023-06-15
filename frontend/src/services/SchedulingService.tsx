@@ -17,8 +17,6 @@ class SchedulingService {
 
   static updateScheduling = () => {};
 
-  static registerManyScheduling = () => {};
-
   static deleteScheduling = () => {};
 
   static getScheduling = () => {};
