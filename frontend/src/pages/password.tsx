@@ -15,7 +15,7 @@ function LoginPage() {
   };
 
   const navigateToLogin = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   const defaultValues = {
@@ -52,17 +52,6 @@ function LoginPage() {
                     <label htmlFor="email" className={classNames({ 'p-error': !!errors.email })}>Email*</label>
                 </span>
             </div>
-            {/*
-            <div className="field">
-                <span className="p-float-label">
-                    <Controller name="password" control={control} rules={{ required: 'Password is required.' }} render={({ field, fieldState }) => (
-                        <Password id={field.name} {...field} toggleMask className={classNames({ 'p-invalid': fieldState.invalid })}  />
-                    )} />
-                    <label htmlFor="password" className={classNames({ 'p-error': errors.password })}>Password*</label>
-                </span>
-            </div>
-                    */}
-
             <Button type="submit" label="Enviar código de recuperação" className="mt-5" />
             {/*<Button label="Esqueci minha senha" className="mt-2 mb-5" outlined/>*/}
             <Button onClick={navigateToLogin} label="Voltar" className="mt-5" />

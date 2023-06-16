@@ -13,6 +13,10 @@ function LoginPage() {
     navigate("/scheduling");
   };
 
+  const navigateToPassword = () => {
+    navigate("/password");
+  };
+
   const defaultValues = {
     email: "",
     password: "",
@@ -110,9 +114,10 @@ function LoginPage() {
 
             <Button type="submit" label="Entrar" className="mt-5" />
             <Button
+            onClick={navigateToPassword}
               label="Esqueci minha senha"
               className="mt-2 mb-5"
-              outlined
+              //outlined
             />
             <Button
               onClick={navigateToScheduling}
