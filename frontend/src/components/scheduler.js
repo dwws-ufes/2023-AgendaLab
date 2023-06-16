@@ -28,6 +28,8 @@ import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import SchedulingController from "../controllers/SchedulingController";
+import TeacherController from "../controllers/TeachersController";
+import AuthController from "../controllers/AuthController";
 
 const PREFIX = "Demo";
 const classes = {
@@ -67,6 +69,8 @@ export default class SchedulingComponent extends React.PureComponent {
       startDayHour: 9,
       endDayHour: 19,
       isNewAppointment: false,
+      selectedLabCode: props.selectedLabCode,
+      selectedLabId: props.selectedLabId,
     };
 
     this.toggleConfirmationVisible = this.toggleConfirmationVisible.bind(this);
@@ -135,7 +139,17 @@ export default class SchedulingComponent extends React.PureComponent {
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
 
-        await SchedulingController.registerScheduling(added);
+        const userId = AuthController.getId();
+        const teacher = await TeacherController.getTeacher(userId);
+
+        console.log(teacher.id);
+        if (!teacher || !teacher.id) return;
+
+        await SchedulingController.registerScheduling({
+          ...added,
+          laboratory: this.state.selectedLabId,
+          created_by: teacher.id,
+        });
       }
       if (changed) {
         data = data.map((appointment) =>

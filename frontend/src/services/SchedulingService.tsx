@@ -7,11 +7,11 @@ class SchedulingService {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(scheduling), // Coloque os dados que você deseja enviar no corpo da solicitação
+        body: JSON.stringify(scheduling),
       }
     );
-    const schedulings = await response.json();
-    return schedulings;
+
+    return response;
   };
 
   static updateScheduling = () => {};

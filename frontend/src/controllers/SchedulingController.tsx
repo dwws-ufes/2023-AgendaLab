@@ -37,7 +37,7 @@ class SchedulingController {
             description: scheduling.notes,
             start_time: newStartDate,
             end_time: newEndingtDate,
-            laboratory: 6,
+            laboratory: scheduling.laboratory,
             created_by: 4,
           });
         }
@@ -48,8 +48,8 @@ class SchedulingController {
         description: scheduling.notes,
         start_time: new Date(scheduling.startDate),
         end_time: new Date(scheduling.endDate),
-        laboratory: 6,
-        created_by: 4,
+        laboratory: scheduling.laboratory,
+        created_by: scheduling.created_by,
       });
     }
 
@@ -74,7 +74,7 @@ class SchedulingController {
       startDate: new Date(scheduling.start_time),
       endDate: new Date(scheduling.end_time),
       laboratory: scheduling.laboratory,
-		  created_by: scheduling.created_by
+      created_by: scheduling.created_by,
     }));
     return schedulings;
   };

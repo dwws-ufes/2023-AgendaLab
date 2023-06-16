@@ -41,10 +41,19 @@ function SchedulingPage() {
 
   const renderScheduler = (selectedLab: any) => {
     if (selectedLab) {
-      const filtered = schedulings.filter((scheduling) => scheduling.laboratory === selectedLab.id)
-      return <SchedulingComponent key={selectedLab.id} schedulings={filtered} />;
+      const filtered = schedulings.filter(
+        (scheduling) => scheduling.laboratory === selectedLab.id
+      );
+      return (
+        <SchedulingComponent
+          key={selectedLab.id}
+          schedulings={filtered}
+          selectedLabCode={selectedLab.code}
+          selectedLabId={selectedLab.id}
+        />
+      );
     }
-  
+
     return null;
   };
 
