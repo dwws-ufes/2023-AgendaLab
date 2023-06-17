@@ -20,9 +20,9 @@ function SchedulingPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const schedulingsList = await SchedulingController.listSchedulings();
-      if (schedulingsList) {
-        setSchedulings(schedulingsList);
+      const response = await SchedulingController.listSchedulings();
+      if (response.ok) {
+        setSchedulings(response.data);
       }
 
       const labList = await LabController.listLabs();
@@ -39,17 +39,26 @@ function SchedulingPage() {
 
   const titles = ["title", "id", "location"];
 
+  const handleChangeScheduler = async () => {
+    const response = await SchedulingController.listSchedulings();
+    if (response.ok) {
+      setSchedulings(response.data);
+    }
+  };
+
   const renderScheduler = (selectedLab: any) => {
     if (selectedLab) {
       const filtered = schedulings.filter(
         (scheduling) => scheduling.laboratory === selectedLab.id
       );
+
       return (
         <SchedulingComponent
           key={selectedLab.id}
           schedulings={filtered}
           selectedLabCode={selectedLab.code}
           selectedLabId={selectedLab.id}
+          onChangedSchedules={handleChangeScheduler}
         />
       );
     }

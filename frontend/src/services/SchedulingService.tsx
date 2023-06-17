@@ -1,5 +1,16 @@
+import {
+  ApiResponse,
+  SchedulingDB,
+  SchedulingSaveDTO,
+  SchedulingUpdateDTO,
+} from "../models/models";
+
 class SchedulingService {
-  static addScheduling = async (scheduling: any) => {
+  static addScheduling = async (
+    scheduling: SchedulingSaveDTO[]
+  ): Promise<ApiResponse> => {
+    let apiResponse: ApiResponse;
+
     const response = await fetch(
       "http://localhost:8080/request/schedule/create/",
       {
@@ -11,19 +22,68 @@ class SchedulingService {
       }
     );
 
-    return response;
+    if (response.ok) {
+      const data: SchedulingDB = await response.json();
+      apiResponse = { ok: true, data };
+    } else {
+      apiResponse = { ok: false, data: null };
+    }
+
+    return apiResponse;
   };
 
-  static updateScheduling = () => {};
+  static updateScheduling = async (
+    id: number,
+    update: SchedulingUpdateDTO
+  ): Promise<ApiResponse> => {
+    let apiResponse: ApiResponse;
 
-  static deleteScheduling = () => {};
+    const response = await fetch(
+      `http://localhost:8080/request/schedule/${id}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(update),
+      }
+    );
 
-  static getScheduling = () => {};
+    apiResponse = { ok: response.ok, data: update };
 
-  static listSchedulings = async () => {
+    return apiResponse;
+  };
+
+  static deleteScheduling = async (id: number) => {
+    let apiResponse: ApiResponse;
+
+    const response = await fetch(
+      `http://localhost:8080/request/schedule/${id}/`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    apiResponse = { ok: response.ok, data: null };
+
+    return apiResponse;
+  };
+
+  static listSchedulings = async (): Promise<ApiResponse> => {
+    let apiResponse: ApiResponse;
     const response = await fetch(`http://localhost:8080/request/schedule/`);
-    const schedulings = await response.json();
-    return schedulings;
+
+    if (response.ok) {
+      const data = await response.json();
+      apiResponse = { ok: true, data };
+    } else {
+      apiResponse = { ok: false, data: null };
+    }
+
+    return apiResponse;
   };
 }
 

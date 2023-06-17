@@ -56,7 +56,6 @@ const StyledFab = styled(Fab)(({ theme }) => ({
 export default class SchedulingComponent extends React.PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
       data: props.schedulings,
       currentDate: "2018-06-27",
@@ -119,7 +118,15 @@ export default class SchedulingComponent extends React.PureComponent {
     this.setState({ confirmationVisible: !confirmationVisible });
   }
 
-  commitDeletedAppointment() {
+  async commitDeletedAppointment() {
+    const response = await SchedulingController.deleteScheduling(
+      this.state.deletedAppointmentId
+    );
+
+    if (response.ok) {
+      this.props.onChangedSchedules();
+    }
+
     this.setState((state) => {
       const { data, deletedAppointmentId } = state;
       const nextData = data.filter(
@@ -131,25 +138,51 @@ export default class SchedulingComponent extends React.PureComponent {
     this.toggleConfirmationVisible();
   }
 
-  commitChanges({ added, changed, deleted }) {
-    this.setState(async (state) => {
+  async commitChanges({ added, changed, deleted }) {
+    const userId = AuthController.getId();
+    const teacher = await TeacherController.getTeacher(userId);
+
+    if (!teacher || !teacher.id) return;
+
+    if (added) {
+      const response = await SchedulingController.registerScheduling({
+        ...added,
+        laboratory: this.state.selectedLabId,
+        created_by: teacher.id,
+      });
+
+      if (response.ok) {
+        this.props.onChangedSchedules();
+      }
+    }
+
+    if (changed) {
+      const updateId = parseInt(Object.keys(changed)[0]);
+
+      const updateObj = changed[updateId];
+
+      const oldObj = SchedulingController.schedules.find(
+        (scheduler) => scheduler.id === updateId
+      );
+
+      const response = await SchedulingController.updateScheduling(updateId, {
+        title: updateObj.title,
+        description: updateObj.notes,
+        start_time: updateObj.startDate || oldObj.startDate,
+        end_time: updateObj.endDate || oldObj.endDate,
+      });
+
+      if (response.ok) {
+        this.props.onChangedSchedules();
+      }
+    }
+
+    this.setState((state) => {
       let { data } = state;
       if (added) {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-
-        const userId = AuthController.getId();
-        const teacher = await TeacherController.getTeacher(userId);
-
-        console.log(teacher.id);
-        if (!teacher || !teacher.id) return;
-
-        await SchedulingController.registerScheduling({
-          ...added,
-          laboratory: this.state.selectedLabId,
-          created_by: teacher.id,
-        });
       }
       if (changed) {
         data = data.map((appointment) =>
