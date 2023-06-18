@@ -1,31 +1,45 @@
+import { TabPanel, TabView } from "primereact/tabview";
+import DataTableComponent from "./dataTable";
 
+function TabViewComponent(props: any) {
+  const teacherTableHeaders =
+    props.teachersTable?.length > 0 ? Object.keys(props.teachersTable[0]) : [];
 
-import { TabPanel, TabView } from 'primereact/tabview';
-import DataTableComponent from './dataTable';
-import { appointments } from '../demo/appointments';
+  const labTableHeaders =
+    props.labTable?.length > 0 ? Object.keys(props.labTable[0]) : [];
 
-function TabViewComponent() {
+  const departmentTableHeaders =
+    props.departmentTable?.length > 0
+      ? Object.keys(props.departmentTable[0])
+      : [];
 
-    const titles = [ 'title',
-        'id',
-        'location'
-    ]
-
-    return (
-        <div>
-            <TabView>
-                <TabPanel header="Header I">
-                    <DataTableComponent products={appointments} collumns={titles}/>
-                </TabPanel>
-                <TabPanel header="Header II">
-                    <DataTableComponent products={appointments} collumns={titles}/>
-                </TabPanel>
-                <TabPanel header="Header III">
-                    <DataTableComponent products={appointments} collumns={titles}/>
-                </TabPanel>
-            </TabView>
-        </div>
-    );
+  return (
+    <div>
+      <div className="d-flex justify-content-end p-2">
+        <button className="btn btn-outline-light">Adicionar</button>
+      </div>
+      <TabView>
+        <TabPanel header="Professores">
+          <DataTableComponent
+            products={props.teachersTable}
+            collumns={teacherTableHeaders}
+          />
+        </TabPanel>
+        <TabPanel header="Laboratórios">
+          <DataTableComponent
+            products={props.labTable}
+            collumns={labTableHeaders}
+          />
+        </TabPanel>
+        <TabPanel header="Departamentos">
+          <DataTableComponent
+            products={props.departmentTable}
+            collumns={departmentTableHeaders}
+          />
+        </TabPanel>
+      </TabView>
+    </div>
+  );
 }
 
 export default TabViewComponent;

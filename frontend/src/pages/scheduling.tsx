@@ -5,11 +5,21 @@ import HeaderComponent from "../components/headerComponent";
 import DataTableComponent from "../components/dataTable";
 import TabViewComponent from "../components/tabView";
 import SchedulingController from "../controllers/SchedulingController";
-import { Lab, Scheduling, SchedulingTable, Teacher } from "../models/models";
+import {
+  Department,
+  DepartmentTable,
+  Lab,
+  LabTable,
+  Scheduling,
+  SchedulingTable,
+  Teacher,
+  TeacherTable,
+} from "../models/models";
 import LabController from "../controllers/LabController";
 import { Dropdown } from "primereact/dropdown";
 import TeacherController from "../controllers/TeachersController";
 import { format } from "date-fns";
+import DepartmentController from "../controllers/DepartmentController";
 
 function SchedulingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -20,6 +30,12 @@ function SchedulingPage() {
     []
   );
 
+  const [teacherTable, setTeacherTable] = useState<TeacherTable[]>([]);
+
+  const [labTable, setLabTable] = useState<LabTable[]>([]);
+
+  const [departmentTable, setDepartmentTable] = useState<DepartmentTable[]>([]);
+
   const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   const [updateSchedulingKey, setUpdateSchedulingKey] = useState(0);
@@ -27,6 +43,8 @@ function SchedulingPage() {
   const [updateSchedulingTableKey, setUpdateSchedulingTableKey] = useState(0);
 
   const [labs, setLabs] = useState<Lab[]>([]);
+
+  const [departments, setDepartments] = useState<Department[]>([]);
 
   const [selectedLab, setSelectedLab] = useState<Lab | null>(null);
 
@@ -40,35 +58,66 @@ function SchedulingPage() {
 
       const labList = await LabController.listLabs();
       if (labList) {
-        setLabs(labList);
+        setLabs([...labList]);
       }
 
       const teacherResponse = await TeacherController.listTeachers();
       if (teacherResponse.ok) {
-        setTeachers(teacherResponse.data);
+        setTeachers([...teacherResponse.data]);
+      }
+
+      const departmentsResponse = await DepartmentController.listDepartments();
+      if (departmentsResponse.ok) {
+        setDepartments([...departmentsResponse.data]);
       }
 
       if (labList.length > 0) {
-        setSelectedLab(labList[0]);
+        setSelectedLab({ ...labList[0] });
       }
     }
     fetchData();
   }, []);
 
   useEffect(() => {
-    const table: SchedulingTable[] = schedulings.map((scheduling) => ({
-      Aula: scheduling.title,
-      Inicio: format(scheduling.startDate, "dd/MM/yyyy HH:mm"),
-      Fim: format(scheduling.endDate, "dd/MM/yyyy HH:mm"),
-      Lab: labs.find((lab) => lab.id === scheduling.laboratory)?.code,
-      Professor: teachers.find(
-        (teacher) => teacher.id === scheduling.created_by
-      )?.name,
+    const schedulingTable: SchedulingTable[] = schedulings.map(
+      (scheduling) => ({
+        Aula: scheduling.title,
+        Inicio: format(scheduling.startDate, "dd/MM/yyyy HH:mm"),
+        Fim: format(scheduling.endDate, "dd/MM/yyyy HH:mm"),
+        Lab: labs.find((lab) => lab.id === scheduling.laboratory)?.code,
+        Professor: teachers.find(
+          (teacher) => teacher.id === scheduling.created_by
+        )?.name,
+      })
+    );
+
+    const teachersTable: TeacherTable[] = teachers.map((teacher) => ({
+      Nome: teacher.name,
+      Email: teacher.email,
+      Registro: teacher.register,
     }));
 
-    setSchedulingsTable(table);
+    const labTable: LabTable[] = labs.map((lab) => ({
+      Codigo: lab.code,
+      Computadores: lab.num_computers,
+      Quadro: lab.has_blackboard ? "Sim" : "Não",
+    }));
+
+    const departmentTable: DepartmentTable[] = departments.map(
+      (department) => ({
+        Codigo: department.code,
+        Nome: department.name,
+        Abertura: department.opening_time,
+        Fechamento: department.closing_time,
+      })
+    );
+
+    setSchedulingsTable(schedulingTable);
     setUpdateSchedulingTableKey((prevKey) => prevKey + 1);
-  }, [schedulings, labs, teachers]);
+    setTeacherTable(teachersTable);
+    setLabTable(labTable);
+    setDepartmentTable(departmentTable);
+  }, [schedulings, labs, teachers, departments]);
 
   const handleChangeScheduler = async () => {
     const response = await SchedulingController.listSchedulings();
@@ -130,7 +179,13 @@ function SchedulingPage() {
       case 1:
         return <div>{renderSchedulingTable()}</div>;
       case 2:
-        return <TabViewComponent />;
+        return (
+          <TabViewComponent
+            teachersTable={teacherTable}
+            labTable={labTable}
+            departmentTable={departmentTable}
+          />
+        );
     }
   };
 

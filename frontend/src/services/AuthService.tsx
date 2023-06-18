@@ -1,4 +1,4 @@
-class LabService {
+class AuthService {
   static login = async (email: string, password: string) => {
     const response = await fetch("http://localhost:8080/request/login/", {
       method: "POST",
@@ -12,4 +12,4 @@ class LabService {
   };
 }
 
-export default LabService;
+export default AuthService;

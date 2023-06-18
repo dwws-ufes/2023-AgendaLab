@@ -52,6 +52,14 @@ export interface Lab {
   created_by: number;
 }
 
+export interface Department {
+  id: number;
+  code: string;
+  name: string;
+  opening_time: string;
+  closing_time: string;
+}
+
 export interface Teacher {
   id: number;
   password: string;
@@ -63,9 +71,30 @@ export interface Teacher {
 }
 
 export interface SchedulingTable {
-  Aula: string,
-  Inicio: string,
-  Fim: string,
-  Lab?: string,
-  Professor?: string,
+  Aula: string;
+  Inicio: string;
+  Fim: string;
+  Lab?: string;
+  Professor?: string;
+}
+
+export interface TeacherTable {
+  Nome: string;
+  Email: string;
+  Registro: number;
+  Departamento?: string;
+}
+
+export interface LabTable {
+  Codigo: string;
+  Computadores: number;
+  Quadro: string;
+  Departamento?: string;
+}
+
+export interface DepartmentTable {
+  Codigo: string;
+  Nome: string;
+  Abertura: string;
+  Fechamento: string;
 }
