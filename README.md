@@ -1,5 +1,7 @@
 # 2023-AgendaLab
 
+![image](images/Logo.png)
+
 ### Running and Installing Dependencies
 Open your `terminal` in root folder and type
 ```
