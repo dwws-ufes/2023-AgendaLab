@@ -55,6 +55,7 @@ def get_routes(request):
 @api_view(['POST'])
 def make_scheduling(request):
     if request.method == 'POST':
+        saved_schedules = []
         for schedule in request.data:
             serializer = SchedulingSerializer(data=schedule)
             # verify if interval is unique of between start_time and end_time
@@ -62,10 +63,12 @@ def make_scheduling(request):
                 return Response({'error': 'Interval already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
             if serializer.is_valid():
-                serializer.save()
+                instance = serializer.save()
+                saved_schedules.append(instance)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(status=status.HTTP_201_CREATED)
+        serialized_schedules = SchedulingSerializer(saved_schedules, many=True)  # Serialize the saved objects
+        return Response(serialized_schedules.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def schedules_list(request):
@@ -309,7 +312,7 @@ def login(request):
         #Login if user exists and password is correct
         auth_login(request,user)
         # print(f"User authenticated = {request.user.is_authenticated}")
-        return Response("User authenticated with success", status= 200)
+        return Response({ "name": user.name, "email": user.email, "id":user.id }, status= 200)
     else:
         return Response("Invalid credentials", status=400)
 
