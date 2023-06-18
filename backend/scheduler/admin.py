@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
-from .models import Scheduling, User, Teacher, Admin, Department, Laboratory
+from .models import Scheduling, User, Teacher, Admin, Department, Laboratory, PasswordResetCode
 
 # Exclude code from admin interface
 class LaboratoryAdmin(admin.ModelAdmin):
@@ -26,3 +26,4 @@ admin.site.register(Admin)
 admin.site.register(Department)
 admin.site.register(Laboratory, LaboratoryAdmin)
 admin.site.register(Scheduling, SchedulingAdmin)
+admin.site.register(PasswordResetCode)

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import Scheduling, Teacher, Admin, Department, Laboratory
+from .models import Scheduling, Teacher, Admin, Department, Laboratory, PasswordResetCode
 from .serializers import *
 
 #Django security
@@ -55,7 +55,6 @@ def get_routes(request):
 @api_view(['POST'])
 def make_scheduling(request):
     if request.method == 'POST':
-        saved_schedules = []
         for schedule in request.data:
             serializer = SchedulingSerializer(data=schedule)
             # verify if interval is unique of between start_time and end_time
@@ -63,12 +62,10 @@ def make_scheduling(request):
                 return Response({'error': 'Interval already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
             if serializer.is_valid():
-                instance = serializer.save()
-                saved_schedules.append(instance)
+                serializer.save()
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        serialized_schedules = SchedulingSerializer(saved_schedules, many=True)  # Serialize the saved objects
-        return Response(serialized_schedules.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def schedules_list(request):
@@ -275,7 +272,52 @@ def users_list(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET','PUT'])
+def reset_password(request, pk, code):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        if PasswordResetCode.objects.filter(user=user).exists():
+            handler = PasswordResetCode.objects.get(user=user)
+            if handler.is_valid(code):
+                serializer = UserSerializer(user,context={'request': request})
+                return Response(serializer.data)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+    elif request.method == 'PUT':
+        if PasswordResetCode.objects.filter(user=user).exists():
+            handler = PasswordResetCode.objects.get(user=user)
+            if handler.is_valid(code):
+                serializer = UserSerializer(user, data=request.data,context={'request': request})
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def send_code(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        # Create a PasswordResetCode object
+        if(PasswordResetCode.objects.filter(user=user).exists()):
+            handler = PasswordResetCode.objects.get(user=user)
+            handler.save(user) # Save the PasswordResetCode object to the database and Send the code to the user
+            return Response(status=status.HTTP_200_OK)
+        else:
+            handler = PasswordResetCode(user=user)
+            handler.save(user) # Save the PasswordResetCode object to the database and Send the code to the user
+            return Response(status=status.HTTP_201_CREATED)
+
+@login_required
+@api_view(['GET', 'DELETE'])
 def users_detail(request, pk):
     try:
         user = User.objects.get(pk=pk)
@@ -285,13 +327,6 @@ def users_detail(request, pk):
     if request.method == 'GET':
         serializer = UserSerializer(user,context={'request': request})
         return Response(serializer.data)
-
-    if request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data,context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         user.delete()
@@ -312,7 +347,7 @@ def login(request):
         #Login if user exists and password is correct
         auth_login(request,user)
         # print(f"User authenticated = {request.user.is_authenticated}")
-        return Response({ "name": user.name, "email": user.email, "id":user.id }, status= 200)
+        return Response("User authenticated with success", status= 200)
     else:
         return Response("Invalid credentials", status=400)
 

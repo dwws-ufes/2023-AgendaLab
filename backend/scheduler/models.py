@@ -1,8 +1,11 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from datetime import timedelta
+from django.utils import timezone
 
 from .services import serviceHandler as serviceHandler
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -23,18 +26,19 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     name = models.CharField("Name", max_length=200)
     email = models.EmailField("Email", unique=True)
-    # is_active = models.BooleanField("Active", default=True)
-    # is_staff = models.BooleanField("Staff status", default=False)
+    recoverCode = serviceHandler.generate_6_digit_code()
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
 
+    def send_recoverCode(self, serviceHandler = serviceHandler):
+        self.recoverCode = serviceHandler.generate_6_digit_code()
+        serviceHandler.send_email(self.recoverCode, "Recover Code")
+        self.save()
+
     def __str__(self):
         return self.name
-
-    def is_authenticated(self):
-        return True
 
 class Teacher(User):
     department = models.ForeignKey("Department", on_delete=models.PROTECT, null=True)
@@ -114,3 +118,33 @@ class Scheduling(models.Model):
         serviceHandler.notify("Scheduling created successfully")
 
         super().save(*args, **kwargs)
+
+class PasswordResetCode(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.IntegerField(default=None, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        current_time = timezone.now()
+        return self.created_at + timedelta(minutes=5) < current_time
+
+    def is_valid(self, code):
+        return self.code == code and not self.is_expired()
+
+    def delete_if_expired(self):
+        if self.is_expired():
+            self.delete()
+
+    def refresh_code(self):
+        self.code = serviceHandler.generate_6_digit_code()
+        self.created_at = timezone.now()
+    
+    def send_code(self, serviceHandler = serviceHandler):
+        serviceHandler.send_email("<AgendaLab> Recover Code", f"Your recover code: {self.code}")
+
+    def save(self, user: User,*args, **kwargs):
+        self.refresh_code()
+        self.user = user
+        self.send_code()
+        super().save(*args, **kwargs)
+

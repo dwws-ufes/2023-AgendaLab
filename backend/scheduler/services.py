@@ -18,12 +18,17 @@ class NotificationService:
         print(message)
         print("Notification sent successfully")
     
-    def send_email(self, body, subject):
-        self.email_service.send_email(body, subject)
+    def send_email(self, subject, body):
+        self.email_service.send_email(subject, body)
 
 class CodeGenerationService:
 
     # ================= Public Methods ================= #
+
+    def generate_6_digit_code(self):
+        from random import randint
+        code = randint(100000, 999999)
+        return code
 
     # Generate a unique code based on the department code and the number of laboratories
     def generate_unique_code(self, options, *args):
@@ -54,7 +59,7 @@ class CodeGenerationService:
             number += 1
         return number
 
-    # ================= Private Methods ================= #
+    # =================================================== #
 
 class Services:
     @inject
@@ -65,13 +70,16 @@ class Services:
         self.notification_service = notification_service
         self.code_generation_service = code_generation_service
     
-    def send_email(self, body, subject):
-        self.notification_service.send_email(body, subject)
+    def send_email(self, subject, body):
+        self.notification_service.send_email(subject, body)
 
     def notify(self, message):
         self.notification_service.notify(message)
 
     def generate_unique_code(self, options, *args):
         return self.code_generation_service.generate_unique_code(options, *args)
+
+    def generate_6_digit_code(self):
+        return self.code_generation_service.generate_6_digit_code()
 
 serviceHandler = Services()

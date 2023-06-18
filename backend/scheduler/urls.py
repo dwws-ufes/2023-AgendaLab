@@ -18,6 +18,8 @@ urlpatterns = [
     path('request/laboratory/<int:pk>/', views.laboratories_detail),
     path('request/user/', views.users_list),
     path('request/user/<int:pk>/', views.users_detail),
+    path('request/user/<int:pk>/send_code/',views.send_code),
+    path('request/user/<int:pk>/<int:code>/',views.reset_password),
     path('request/login/',views.login),
     path('request/logout/',views.logout),
 ]
