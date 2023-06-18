@@ -79,6 +79,10 @@ function SchedulingPage() {
   }, []);
 
   useEffect(() => {
+    handleChangeScheduler()
+  }, [selectedLab]);
+
+  useEffect(() => {
     const schedulingTable: SchedulingTable[] = schedulings.map(
       (scheduling) => ({
         Aula: scheduling.title,
