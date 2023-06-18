@@ -54,6 +54,22 @@ function LoginPage() {
             </div>
             <Button type="submit" label="Enviar código de recuperação" className="mt-5" />
             {/*<Button label="Esqueci minha senha" className="mt-2 mb-5" outlined/>*/}
+            <></>
+            <div className="field py-4">
+                <span className="p-float-label p-input-icon-right">
+                    <i className="pi pi-envelope" />
+                    <Controller name="Codigo" control={control}
+                        rules={{ required: 'Codigo is required.', pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: 'Invalid email address. E.g. example@email.com' }}}
+                        render={({ field, fieldState }) => (
+                            <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.invalid })} />
+                    )} />
+                    <label htmlFor="Codigo" className={classNames({ 'p-error': !!errors.email })}>Email*</label>
+                </span>
+            </div>
+            <Button type="submit" label="Verificar Codigo" className="mt-5" />
+            {/*<Button label="Esqueci minha senha" className="mt-2 mb-5" outlined/>*/}
+
+
             <Button onClick={navigateToLogin} label="Voltar" className="mt-5" />
           </form>
         </div>
