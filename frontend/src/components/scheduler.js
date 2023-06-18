@@ -239,7 +239,7 @@ export default class SchedulingComponent extends React.PureComponent {
         <Appointments.AppointmentContent {...restProps}>
           <div className={restProps.container}>
             <div>{restProps.data.location}</div>
-            <div>Your information</div>
+            <div>{/*PUXAR NOME DA AULA*/ }RESERVADO</div>
           </div>
         </Appointments.AppointmentContent>
       );
