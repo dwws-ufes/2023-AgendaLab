@@ -124,23 +124,23 @@ export default class SchedulingComponent extends React.PureComponent {
     );
 
     if (response.ok) {
+      this.setState((state) => {
+        const { data, deletedAppointmentId } = state;
+        const nextData = data.filter(
+          (appointment) => appointment.id !== deletedAppointmentId
+        );
+
+        return { data: nextData, deletedAppointmentId: null };
+      });
+      this.toggleConfirmationVisible();
       this.props.onChangedSchedules();
     }
-
-    this.setState((state) => {
-      const { data, deletedAppointmentId } = state;
-      const nextData = data.filter(
-        (appointment) => appointment.id !== deletedAppointmentId
-      );
-
-      return { data: nextData, deletedAppointmentId: null };
-    });
-    this.toggleConfirmationVisible();
   }
 
   async commitChanges({ added, changed, deleted }) {
     const userId = AuthController.getId();
-    const teacher = await TeacherController.getTeacher(userId);
+    const response = await TeacherController.getTeacher(userId);
+    const teacher = response?.data;
 
     if (!teacher || !teacher.id) return;
 
@@ -180,9 +180,7 @@ export default class SchedulingComponent extends React.PureComponent {
     this.setState((state) => {
       let { data } = state;
       if (added) {
-        const startingAddedId =
-          data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
+        data = SchedulingController.schedules;
       }
       if (changed) {
         data = data.map((appointment) =>

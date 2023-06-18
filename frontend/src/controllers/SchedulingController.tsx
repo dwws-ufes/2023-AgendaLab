@@ -125,7 +125,9 @@ class SchedulingController {
     const response = await SchedulingService.deleteScheduling(id);
 
     if (response.ok) {
-      SchedulingController.schedules.filter((schedule) => schedule.id !== id);
+      SchedulingController.schedules = SchedulingController.schedules.filter(
+        (schedule) => schedule.id !== id
+      );
       responseController = { ok: true, data: null };
     } else {
       responseController = { ok: false, data: null };

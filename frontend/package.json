@@ -14,6 +14,7 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "bootstrap": "^5.2.3",
+    "date-fns": "^2.30.0",
     "dotenv-webpack": "^8.0.1",
     "primeicons": "^6.0.1",
     "primereact": "^9.4.0",

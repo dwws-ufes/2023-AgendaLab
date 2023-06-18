@@ -61,3 +61,11 @@ export interface Teacher {
   register: number;
   department: number;
 }
+
+export interface SchedulingTable {
+  Aula: string,
+  Inicio: string,
+  Fim: string,
+  Lab?: string,
+  Professor?: string,
+}

@@ -23,7 +23,7 @@ class SchedulingService {
     );
 
     if (response.ok) {
-      const data: SchedulingDB = await response.json();
+      const data: SchedulingDB[] = await response.json();
       apiResponse = { ok: true, data };
     } else {
       apiResponse = { ok: false, data: null };
