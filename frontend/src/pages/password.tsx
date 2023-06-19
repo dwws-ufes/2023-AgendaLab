@@ -21,6 +21,7 @@ function LoginPage() {
   const defaultValues = {
     email: '',
     password: '',
+	codigo: '',
   }
 
   const onSubmit = (data: any) => {
@@ -58,12 +59,12 @@ function LoginPage() {
             <div className="field py-4">
                 <span className="p-float-label p-input-icon-right">
                     <i className="pi pi-envelope" />
-                    <Controller name="Codigo" control={control}
-                        rules={{ required: 'Codigo is required.', pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: 'Invalid email address. E.g. example@email.com' }}}
+                    <Controller name="codigo" control={control}
+						rules={{ required: 'Codigo is required.', pattern: { value: /^[0-9]{6}$/i, message: 'Invalid code. E.g. 123456' }}}
                         render={({ field, fieldState }) => (
                             <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.invalid })} />
                     )} />
-                    <label htmlFor="Codigo" className={classNames({ 'p-error': !!errors.email })}>Email*</label>
+                    <label htmlFor="codigo" className={classNames({ 'p-error': !!errors.codigo })}>Codigo*</label>
                 </span>
             </div>
             <Button type="submit" label="Verificar Codigo" className="mt-5" />
