@@ -4,6 +4,8 @@ import { InputText } from "primereact/inputtext";
 import { useForm, Controller } from "react-hook-form";
 import { classNames } from "primereact/utils";
 import { Password } from "primereact/password";
+import Img from 'primereact/image'
+import logo from "../images/LogoTeste.png"
 import AuthController from "../controllers/AuthController";
 
 function LoginPage() {
@@ -44,9 +46,11 @@ function LoginPage() {
         className="w-50 d-flex justify-content-center align-items-end p-5"
         style={{ backgroundColor: "var(--indigo-500)" }}
       >
+        <img src={logo} />
         <p className="text-white h2">
-          Agenda Lab{" "}
+          {/*Agenda Lab{" "}   
           <i className="pi pi-calendar" style={{ fontSize: "1.5rem" }}></i>
+          */}
         </p>
       </div>
 

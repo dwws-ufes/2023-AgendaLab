@@ -16,10 +16,6 @@ function LoginPage() {
     navigate("/");
   };
 
-  const navigateToNewPassword = () => {
-    navigate("/newPassword");
-  };
-
   const defaultValues = {
     email: '',
     password: '',
@@ -44,37 +40,23 @@ function LoginPage() {
 
       <div className="w-50 d-flex align-items-center justify-content-center ">
         <div>
-          <h1 className="text-white">Recuperar senha</h1>
+          <h1 className="text-white">Inserir nova Senha</h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
             <div className="field py-4">
                 <span className="p-float-label p-input-icon-right">
                     <i className="pi pi-envelope" />
-                    <Controller name="email" control={control}
-                        rules={{ required: 'Email is required.', pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: 'Invalid email address. E.g. example@email.com' }}}
+                    <Controller name="Nova_Senha" control={control}
+                        rules={{ required: 'Nova Senha is required.', pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: 'Invalid email address. E.g. example@email.com' }}}
                         render={({ field, fieldState }) => (
                             <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.invalid })} />
                     )} />
-                    <label htmlFor="email" className={classNames({ 'p-error': !!errors.email })}>Email*</label>
+                    <label htmlFor="Nova Senha" className={classNames({ 'p-error': !!errors.email })}>Nova Senha*</label>
                 </span>
             </div>
-            <Button type="submit" label="Enviar código de recuperação" className="mt-5" />
+            <Button type="submit" label="Mudar Senha" className="mt-5" />
             {/*<Button label="Esqueci minha senha" className="mt-2 mb-5" outlined/>*/}
             <></>
-            <div className="field py-4">
-                <span className="p-float-label p-input-icon-right">
-                    <i className="pi pi-envelope" />
-                    <Controller name="codigo" control={control}
-						rules={{ required: 'Codigo is required.', pattern: { value: /^[0-9]{6}$/i, message: 'Invalid code. E.g. 123456' }}}
-                        render={({ field, fieldState }) => (
-                            <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.invalid })} />
-                    )} />
-                    <label htmlFor="codigo" className={classNames({ 'p-error': !!errors.codigo })}>Codigo*</label>
-                </span>
-            </div>
-            <Button onClick={navigateToNewPassword} type="submit" label="Verificar Codigo" className="mt-5" />
-            {/*<Button label="Esqueci minha senha" className="mt-2 mb-5" outlined/>*/}
-
 
             <Button onClick={navigateToLogin} label="Voltar" className="mt-5" />
           </form>
