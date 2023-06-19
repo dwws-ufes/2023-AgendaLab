@@ -2,10 +2,10 @@ from injector import inject
 
 class EmailService:
     def send_email(self, subject, body):
-        print("=== Email ===")
+        print("========= Email Received =========")
         print(f"Subject: {subject}")
         print(body)
-        print("=============")
+        print("==================================")
 
 # Notification service that can be injected into the models and have EmailService injected into it
 class NotificationService:
