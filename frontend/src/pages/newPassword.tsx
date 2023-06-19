@@ -46,12 +46,12 @@ function LoginPage() {
             <div className="field py-4">
                 <span className="p-float-label p-input-icon-right">
                     <i className="pi pi-envelope" />
-                    <Controller name="Nova_Senha" control={control}
-                        rules={{ required: 'Nova Senha is required.', pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: 'Invalid email address. E.g. example@email.com' }}}
+                    <Controller name="password" control={control}
+						rules={{ required: 'Senha é obrigatória.', minLength: { value: 5, message: 'Senha deve ter no mínimo 5 caracteres.' } }}
                         render={({ field, fieldState }) => (
                             <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.invalid })} />
                     )} />
-                    <label htmlFor="Nova Senha" className={classNames({ 'p-error': !!errors.email })}>Nova Senha*</label>
+                    <label htmlFor="password" className={classNames({ 'p-error': !!errors.password })}>Nova Senha*</label>
                 </span>
             </div>
             <Button type="submit" label="Mudar Senha" className="mt-5" />
