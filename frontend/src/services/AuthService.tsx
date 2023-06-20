@@ -10,6 +10,31 @@ class AuthService {
     const loginResponse = await response.json();
     return loginResponse;
   };
+
+  static forgotPassword = async (email: string) => {
+    const response = await fetch(
+      `http://localhost:8080/request/user/${email}/send_code`
+    );
+    return response;
+  };
+
+  static checkCode = async (
+    code: string,
+    email: string,
+    newPassword: string
+  ) => {
+    const response = await fetch(
+      `http://localhost:8080/request/user/${email}/${code}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password: newPassword }),
+      }
+    );
+    return response;
+  };
 }
 
 export default AuthService;

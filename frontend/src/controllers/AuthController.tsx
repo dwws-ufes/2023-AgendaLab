@@ -19,15 +19,29 @@ class LabController {
     return { err: "Erro desconhecido" };
   };
 
+  static forgotPassword = async (email: string) => {
+    const response = await AuthService.forgotPassword(email);
+    return response;
+  };
+
+  static checkCode = async (
+    code: string,
+    email: string,
+    newPassword: string
+  ) => {
+    const response = await AuthService.checkCode(code, email, newPassword);
+    return response;
+  };
+
   static getMail = () => this.email;
   static getName = () => this.username;
   static getId = () => this.id;
-  
+
   static logout = () => {
-    this.email = null
-    this.username = null
-    this.id = null
-  }
+    this.email = null;
+    this.username = null;
+    this.id = null;
+  };
 }
 
 export default LabController;
