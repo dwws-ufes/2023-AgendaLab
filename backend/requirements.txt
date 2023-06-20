@@ -4,4 +4,4 @@ djangorestframework
 django-cors-headers
 django_injector
 django-otp
-qrcode
+django-qrcode
