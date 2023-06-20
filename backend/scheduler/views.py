@@ -277,9 +277,9 @@ def users_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT'])
-def reset_password(request, pk, code):
+def reset_password(request, email, code):
     try:
-        user = User.objects.get(pk=pk)
+        user = User.objects.get(email=email)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -303,9 +303,9 @@ def reset_password(request, pk, code):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def send_code(request, pk):
+def send_code(request, email):
     try:
-        user = User.objects.get(pk=pk)
+        user = User.objects.get(email=email)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
