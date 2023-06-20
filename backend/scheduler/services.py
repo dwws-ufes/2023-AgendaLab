@@ -1,8 +1,9 @@
 from injector import inject
 
 class EmailService:
-    def send_email(self, subject, body):
-        print("========= Email Received =========")
+    def send_email(self, destination, subject, body):
+        print("========= Email Sent =========")
+        print(f"To: {destination}")
         print(f"Subject: {subject}")
         print(body)
         print("==================================")
@@ -18,8 +19,8 @@ class NotificationService:
         print(message)
         print("====================")
     
-    def send_email(self, subject, body):
-        self.email_service.send_email(subject, body)
+    def send_email(self, destination, subject, body):
+        self.email_service.send_email(destination, subject, body)
 
 class CodeGenerationService:
 
@@ -70,8 +71,8 @@ class Services:
         self.notification_service = notification_service
         self.code_generation_service = code_generation_service
     
-    def send_email(self, subject, body):
-        self.notification_service.send_email(subject, body)
+    def send_email(self, destination, subject, body):
+        self.notification_service.send_email(destination, subject, body)
 
     def notify(self, message):
         self.notification_service.notify(message)

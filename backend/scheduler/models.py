@@ -32,11 +32,6 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
 
-    def send_recoverCode(self, serviceHandler = serviceHandler):
-        self.recoverCode = serviceHandler.generate_6_digit_code()
-        serviceHandler.send_email(self.recoverCode, "Recover Code")
-        self.save()
-
     def __str__(self):
         return self.name
 
@@ -114,7 +109,6 @@ class Scheduling(models.Model):
 
         # Dependency Injection of Notification Service
 
-        serviceHandler.send_email(f"<SUCESS> {self.title}", f"Your description: {self.description}")
         serviceHandler.notify("Scheduling created successfully")
 
         super().save(*args, **kwargs)
@@ -140,7 +134,7 @@ class PasswordResetCode(models.Model):
         self.created_at = timezone.now()
     
     def send_code(self, serviceHandler = serviceHandler):
-        serviceHandler.send_email("<AgendaLab> Recover Code", f"Your recover code: {self.code}")
+        serviceHandler.send_email(self.user.email, "<AgendaLab> Recover Code", f"Your recover code: {self.code}")
 
     def save(self, user: User,*args, **kwargs):
         self.refresh_code()
