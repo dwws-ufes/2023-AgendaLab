@@ -14,6 +14,7 @@ function HeaderComponent() {
   }, []);
 
   const navigateToLogin = () => {
+    AuthController.logout()
     navigate("/");
   };
 

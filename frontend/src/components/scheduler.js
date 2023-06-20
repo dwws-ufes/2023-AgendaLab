@@ -48,8 +48,11 @@ export default class SchedulingComponent extends React.PureComponent {
   constructor(props) {
     super(props);
     const today = format(new Date(), "yyyy-MM-dd");
+    const userId = AuthController.getId();
+
     this.state = {
       data: props.schedulings,
+      userId: userId,
       currentDate: today,
       confirmationVisible: false,
       editingFormVisible: false,
@@ -75,8 +78,10 @@ export default class SchedulingComponent extends React.PureComponent {
     this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this);
   }
 
-  componentDidUpdate() {
-    // this.appointmentForm.update();
+  componentDidUpdate(prevProps) {
+    if (prevProps.userId !== this.props.userId) {
+      this.setState({ userId: this.props.userId }); 
+    }
   }
 
   onEditingAppointmentChange(editingAppointment) {
@@ -316,20 +321,22 @@ export default class SchedulingComponent extends React.PureComponent {
             </DialogActions>
           </Dialog>
 
-          <StyledFab
-            color="secondary"
-            className={classes.addButton}
-            onClick={() => {
-              this.setState({ editingFormVisible: true });
-              this.onEditingAppointmentChange(undefined);
-              this.onAddedAppointmentChange({
-                startDate: new Date(currentDate).setHours(startDayHour),
-                endDate: new Date(currentDate).setHours(startDayHour + 1),
-              });
-            }}
-          >
-            <AddIcon />
-          </StyledFab>
+          {this.state.userId ? (
+            <StyledFab
+              color="secondary"
+              className={classes.addButton}
+              onClick={() => {
+                this.setState({ editingFormVisible: true });
+                this.onEditingAppointmentChange(undefined);
+                this.onAddedAppointmentChange({
+                  startDate: new Date(currentDate).setHours(startDayHour),
+                  endDate: new Date(currentDate).setHours(startDayHour + 1),
+                });
+              }}
+            >
+              <AddIcon />
+            </StyledFab>
+          ) : null}
         </Paper>
       </div>
     );
