@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-# Register your models here.
+
+'''from django_otp.admin import OTPAdminSite
+admin.site.__class__ = OTPAdminSite'''
 
 from .models import Scheduling, User, Teacher, Admin, Department, Laboratory, PasswordResetCode
 
