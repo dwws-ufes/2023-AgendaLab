@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import SchedulingComponent from "../components/scheduler";
 import HeaderComponent from "../components/headerComponent";
 import DataTableComponent from "../components/dataTable";
@@ -20,6 +19,8 @@ import { Dropdown } from "primereact/dropdown";
 import TeacherController from "../controllers/TeachersController";
 import { format } from "date-fns";
 import DepartmentController from "../controllers/DepartmentController";
+import { Fieldset } from "primereact/fieldset";
+import { Toast } from "primereact/toast";
 
 function SchedulingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -47,6 +48,8 @@ function SchedulingPage() {
   const [departments, setDepartments] = useState<Department[]>([]);
 
   const [selectedLab, setSelectedLab] = useState<Lab | null>(null);
+
+  const toast = useRef<Toast>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -79,7 +82,7 @@ function SchedulingPage() {
   }, []);
 
   useEffect(() => {
-    handleChangeScheduler()
+    handleChangeScheduler();
   }, [selectedLab]);
 
   useEffect(() => {
@@ -145,6 +148,7 @@ function SchedulingPage() {
           selectedLabCode={selectedLab.code}
           selectedLabId={selectedLab.id}
           onChangedSchedules={handleChangeScheduler}
+          onShowToast={showToast}
         />
       );
     }
@@ -164,19 +168,54 @@ function SchedulingPage() {
     );
   };
 
+  const showToast = (
+    severity: "success" | "info" | "warn" | "error" | undefined,
+    summary: string,
+    detail: string
+  ) => {
+    toast.current?.show({
+      severity: severity,
+      summary: summary,
+      detail: detail,
+    });
+  };
+
   const renderPage = () => {
     switch (activeIndex) {
       case 0:
         return (
           <div>
-            <Dropdown
-              value={selectedLab}
-              onChange={(e) => setSelectedLab(e.value)}
-              options={labs}
-              optionLabel="code"
-              placeholder="Selecione um laboratório"
-              className="w-full md:w-14rem"
-            />
+            <Fieldset legend="Laboratórios" className="my-2" toggleable>
+              <div className="d-flex justify-content-center align-items-center px-">
+                <Dropdown
+                  className="px-2"
+                  value={selectedLab}
+                  onChange={(e) => setSelectedLab(e.value)}
+                  options={labs}
+                  optionLabel="code"
+                  placeholder="Selecione um laboratório"
+                />
+                <div className="px-3 w-25 d-flex align-items-center justify-content-center ">
+                  <span className="px-2">
+                    <i className="pi pi-external-link"></i>
+                  </span>
+                  <span>
+                    {selectedLab?.has_blackboard
+                      ? "Quadro: Sim"
+                      : "Quadro: Não"}
+                  </span>
+                </div>
+
+                <div className="px-3 w-25 d-flex align-items-center justify-content-center">
+                  <span className="px-2">
+                    <i className="pi pi-desktop"></i>
+                  </span>
+                  <span>
+                    {"Computadores: " + selectedLab?.num_computers.toString()}
+                  </span>
+                </div>
+              </div>
+            </Fieldset>
             {renderScheduler(selectedLab)}
           </div>
         );
@@ -195,6 +234,7 @@ function SchedulingPage() {
 
   return (
     <div className="vh-100">
+      <Toast ref={toast} />
       <HeaderComponent />
       <div className="d-flex" style={{ height: "calc(100vh - 60px)" }}>
         <div className="bg-red w-25 d-flex justify-content-center pt-5">

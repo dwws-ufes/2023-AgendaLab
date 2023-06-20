@@ -14,6 +14,10 @@ class SchedulingController {
     let schedulingToSave: SchedulingSaveDTO[] = [];
     let responseController: ApiResponse;
 
+    if (scheduling.allDay) {
+      return { err: "method not allowed" };
+    }
+
     if (scheduling.rRule) {
       const rule = scheduling.rRule.substring(
         scheduling.rRule.indexOf(":") + 1
@@ -25,6 +29,9 @@ class SchedulingController {
 
       parts.forEach((part) => {
         const [key, value] = part.split("=");
+        if (key === "FREQ" && value !== "DAILY") {
+          return { err: "method not allowed" };
+        }
         if (key === "INTERVAL") interval = parseInt(value);
         else if (key === "COUNT") count = parseInt(value);
       });

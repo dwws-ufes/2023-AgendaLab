@@ -7,6 +7,7 @@ export interface Scheduling {
   laboratory: number;
   created_by: number;
   rRule?: string;
+  allDay?: string;
 }
 
 export interface SchedulingDB {

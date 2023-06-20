@@ -2,7 +2,6 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
-import Grid from "@mui/material/Grid";
 import {
   Scheduler,
   Toolbar,
@@ -30,19 +29,11 @@ import AddIcon from "@mui/icons-material/Add";
 import SchedulingController from "../controllers/SchedulingController";
 import TeacherController from "../controllers/TeachersController";
 import AuthController from "../controllers/AuthController";
+import { format } from "date-fns";
+import { Toast } from "primereact/toast";
 
-const PREFIX = "Demo";
 const classes = {
-  content: `${PREFIX}-content`,
-  header: `${PREFIX}-header`,
-  closeButton: `${PREFIX}-closeButton`,
-  buttonGroup: `${PREFIX}-buttonGroup`,
-  button: `${PREFIX}-button`,
-  picker: `${PREFIX}-picker`,
-  wrapper: `${PREFIX}-wrapper`,
-  icon: `${PREFIX}-icon`,
-  textField: `${PREFIX}-textField`,
-  addButton: `${PREFIX}-addButton`,
+  addButton: `Demo-addButton`,
 };
 
 const StyledFab = styled(Fab)(({ theme }) => ({
@@ -56,17 +47,18 @@ const StyledFab = styled(Fab)(({ theme }) => ({
 export default class SchedulingComponent extends React.PureComponent {
   constructor(props) {
     super(props);
+    const today = format(new Date(), "yyyy-MM-dd");
     this.state = {
       data: props.schedulings,
-      currentDate: "2018-06-27",
+      currentDate: today,
       confirmationVisible: false,
       editingFormVisible: false,
       deletedAppointmentId: undefined,
       editingAppointment: undefined,
       previousAppointment: undefined,
       addedAppointment: {},
-      startDayHour: 9,
-      endDayHour: 19,
+      startDayHour: 0,
+      endDayHour: 24,
       isNewAppointment: false,
       selectedLabCode: props.selectedLabCode,
       selectedLabId: props.selectedLabId,
@@ -124,6 +116,12 @@ export default class SchedulingComponent extends React.PureComponent {
     );
 
     if (response.ok) {
+      this.props.onShowToast(
+        "success",
+        "Agendamento",
+        "Agendamento Excluido com Sucesso"
+      );
+
       this.setState((state) => {
         const { data, deletedAppointmentId } = state;
         const nextData = data.filter(
@@ -134,15 +132,30 @@ export default class SchedulingComponent extends React.PureComponent {
       });
       this.toggleConfirmationVisible();
       this.props.onChangedSchedules();
+    } else {
+      this.props.onShowToast(
+        "error",
+        "Agendamento",
+        "Erro ao excluir agendamento"
+      );
     }
   }
 
   async commitChanges({ added, changed, deleted }) {
     const userId = AuthController.getId();
+
+    if (!userId) {
+      this.props.onShowToast("error", "Agendamento", "Usuário não autenticado");
+      return;
+    }
+
     const response = await TeacherController.getTeacher(userId);
+
     const teacher = response?.data;
 
-    if (!teacher || !teacher.id) return;
+    if (!teacher || !teacher.id) {
+      return;
+    }
 
     if (added) {
       const response = await SchedulingController.registerScheduling({
@@ -151,8 +164,29 @@ export default class SchedulingComponent extends React.PureComponent {
         created_by: teacher.id,
       });
 
+      if (response.err) {
+        this.props.onShowToast(
+          "error",
+          "Agendamento",
+          "Método ainda não implementado"
+        );
+
+        return;
+      }
+
       if (response.ok) {
+        this.props.onShowToast(
+          "success",
+          "Agendamento",
+          "Agendamento Adicionado com Sucesso"
+        );
         this.props.onChangedSchedules();
+      } else {
+        this.props.onShowToast(
+          "error",
+          "Agendamento",
+          "Erro ao adicionar agendamento"
+        );
       }
     }
 
@@ -160,6 +194,12 @@ export default class SchedulingComponent extends React.PureComponent {
       const updateId = parseInt(Object.keys(changed)[0]);
 
       const updateObj = changed[updateId];
+
+      if (updateObj.rRule) {
+        this.props.onShowToast("error", "Agendamento", "Ação inválida");
+
+        return;
+      }
 
       const oldObj = SchedulingController.schedules.find(
         (scheduler) => scheduler.id === updateId
@@ -173,7 +213,18 @@ export default class SchedulingComponent extends React.PureComponent {
       });
 
       if (response.ok) {
+        this.props.onShowToast(
+          "success",
+          "Agendamento",
+          "Agendamento modificado com Sucesso"
+        );
         this.props.onChangedSchedules();
+      } else {
+        this.props.onShowToast(
+          "error",
+          "Agendamento",
+          "Erro ao modificar agendamento"
+        );
       }
     }
 
@@ -197,33 +248,6 @@ export default class SchedulingComponent extends React.PureComponent {
     });
   }
 
-  // const CustomAppointment = ({ style, ...restProps }) => {
-  //   if (restProps.data.location === "Room 1")
-  //     return (
-  //       <Appointments.Appointment
-  //         {...restProps}
-  //         style={{ ...style, backgroundColor: "red" }}
-  //         className="CLASS_ROOM1"
-  //         data={restProps.data.location}
-  //       />
-  //     );
-  //   if (restProps.data.location === "Room 2")
-  //     return (
-  //       <Appointments.Appointment
-  //         {...restProps}
-  //         style={{ ...style, backgroundColor: "green" }}
-  //         className="CLASS_ROOM2"
-  //       />
-  //     );
-  //   return (
-  //     <Appointments.Appointment
-  //       {...restProps}
-  //       style={style}
-  //       className="CLASS_ROOM3"
-  //     />
-  //   );
-  // };
-
   render() {
     const {
       currentDate,
@@ -234,106 +258,80 @@ export default class SchedulingComponent extends React.PureComponent {
       endDayHour,
     } = this.state;
 
-    const AppointmentContent = ({ style, ...restProps }) => {
-      return (
-        <Appointments.AppointmentContent {...restProps}>
-          <div className={restProps.container}>
-            <div>{restProps.data.location}</div>
-            <div>{/*PUXAR NOME DA AULA*/ }RESERVADO</div>
-          </div>
-        </Appointments.AppointmentContent>
-      );
-    };
-
-    const Content = ({ children, appointmentData, ...restProps }) => (
-      <AppointmentTooltip.Content
-        {...restProps}
-        appointmentData={appointmentData}
-      >
-        <Grid container alignItems="center">
-          <Grid item xs={10}>
-            <span>{appointmentData.location}</span>
-            <div>Your information</div>
-          </Grid>
-        </Grid>
-      </AppointmentTooltip.Content>
-    );
-
     return (
-      <Paper>
-        <Scheduler data={data}>
-          <ViewState defaultCurrentDate="2018-07-27" />
-          <EditingState
-            onCommitChanges={this.commitChanges}
-            onEditingAppointmentChange={this.onEditingAppointmentChange}
-            onAddedAppointmentChange={this.onAddedAppointmentChange}
-          />
-          <DayView startDayHour={0} endDayHour={24} />
-          <WeekView startDayHour={startDayHour} endDayHour={endDayHour} />
-          <MonthView />
-          <AllDayPanel />
-          <EditRecurrenceMenu />
-          <Appointments
-            appointmentContentComponent={AppointmentContent}
-            // appointmentContentComponent={AppointmentContent}
-          />
-          <AppointmentTooltip
-            showOpenButton
-            showCloseButton
-            showDeleteButton
-            contentComponent={Content}
-          />
-          <Toolbar />
-          <ViewSwitcher />
-          <DateNavigator />
-          <TodayButton />
-          <AppointmentForm
-            visible={editingFormVisible}
-            onVisibilityChange={this.toggleEditingFormVisibility}
-          />
-          <DragDropProvider />
-        </Scheduler>
+      <div>
+        <Toast ref={this.toast} />
+        <Paper>
+          <Scheduler data={data}>
+            <ViewState defaultCurrentDate={this.today} />
+            <EditingState
+              onCommitChanges={this.commitChanges}
+              onEditingAppointmentChange={this.onEditingAppointmentChange}
+              onAddedAppointmentChange={this.onAddedAppointmentChange}
+            />
+            <DayView startDayHour={0} endDayHour={24} />
+            <WeekView startDayHour={startDayHour} endDayHour={endDayHour} />
+            <MonthView />
+            <AllDayPanel />
+            <EditRecurrenceMenu />
+            <Appointments />
+            <AppointmentTooltip
+              showOpenButton
+              showCloseButton
+              showDeleteButton
+            />
+            <Toolbar />
+            <ViewSwitcher />
+            <DateNavigator />
+            <TodayButton />
+            <AppointmentForm
+              visible={editingFormVisible}
+              onVisibilityChange={this.toggleEditingFormVisibility}
+            />
+            <DragDropProvider />
+          </Scheduler>
 
-        <Dialog open={confirmationVisible} onClose={this.cancelDelete}>
-          <DialogTitle>Delete Appointment</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this appointment?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={this.toggleConfirmationVisible}
-              color="primary"
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={this.commitDeletedAppointment}
-              color="secondary"
-              variant="outlined"
-            >
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
+          <Dialog open={confirmationVisible} onClose={this.cancelDelete}>
+            <DialogTitle>Deletar Agendamento</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Tem certeza que deseja excluir esse agendamento?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={this.toggleConfirmationVisible}
+                color="primary"
+                variant="outlined"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={this.commitDeletedAppointment}
+                color="secondary"
+                variant="outlined"
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
 
-        <StyledFab
-          color="secondary"
-          className={classes.addButton}
-          onClick={() => {
-            this.setState({ editingFormVisible: true });
-            this.onEditingAppointmentChange(undefined);
-            this.onAddedAppointmentChange({
-              startDate: new Date(currentDate).setHours(startDayHour),
-              endDate: new Date(currentDate).setHours(startDayHour + 1),
-            });
-          }}
-        >
-          <AddIcon />
-        </StyledFab>
-      </Paper>
+          <StyledFab
+            color="secondary"
+            className={classes.addButton}
+            onClick={() => {
+              this.setState({ editingFormVisible: true });
+              this.onEditingAppointmentChange(undefined);
+              this.onAddedAppointmentChange({
+                startDate: new Date(currentDate).setHours(startDayHour),
+                endDate: new Date(currentDate).setHours(startDayHour + 1),
+              });
+            }}
+          >
+            <AddIcon />
+          </StyledFab>
+        </Paper>
+      </div>
     );
   }
 }

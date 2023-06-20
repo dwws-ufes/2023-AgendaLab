@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
+import  { useRef } from 'react';
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useForm, Controller } from "react-hook-form";
 import { classNames } from "primereact/utils";
 import { Password } from "primereact/password";
-import Img from 'primereact/image'
 import logo from "../images/LogoTeste.png"
 import AuthController from "../controllers/AuthController";
+import { Toast } from 'primereact/toast';
+
 
 function LoginPage() {
   const navigate = useNavigate();
+
+  const toast = useRef<Toast>(null);
 
   const navigateToScheduling = () => {
     navigate("/scheduling");
@@ -29,6 +33,8 @@ function LoginPage() {
 
     if (response.email && response.name) {
       navigateToScheduling();
+    } else {
+      toast.current?.show({ severity: 'error', summary: 'Falha na autenticação', detail: 'Credenciais inválidas' });
     }
     reset();
   };
@@ -42,6 +48,7 @@ function LoginPage() {
 
   return (
     <div className="login-page d-flex vh-100">
+      <Toast ref={toast} />
       <div
         className="w-50 d-flex justify-content-center align-items-end p-5"
         style={{ backgroundColor: "var(--indigo-500)" }}
@@ -101,6 +108,7 @@ function LoginPage() {
                       id={field.name}
                       {...field}
                       toggleMask
+                      feedback={false}
                       className={classNames({
                         "p-invalid": fieldState.invalid,
                       })}
