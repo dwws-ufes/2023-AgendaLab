@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_injector', # Enable Django Injector
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'rdflib',
 ]
 
 MIDDLEWARE = [
