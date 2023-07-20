@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'rdflib',
+    'sparql.techapi',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ CORS_ALLOWED_ORIGINS = [
 
 #Allow all origin on corsheaders
 CORS_ORIGIN_ALLOW_ALL = True
+
+SPARQL_ENDPOINT = 'http://dbpedia.org/sparql'
