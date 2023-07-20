@@ -23,4 +23,5 @@ urlpatterns = [
     path('request/user/<str:email>/send_code/',views.send_code),
     path('request/login/',views.login),
     path('request/logout/',views.logout),
+    path('request/buildRDF/',views.buildRDF),
 ]

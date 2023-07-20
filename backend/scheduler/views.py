@@ -13,6 +13,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required, permission_required
 
+
+
 @api_view(['GET'])
 def get_routes(request):
     routes = [
@@ -359,3 +361,9 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return Response("User logged out with success", status=200)
+
+@api_view(['GET'])
+def buildRDF(request):
+    from .sparql import build_RDF
+    build_RDF()
+    return Response("REQUEST WAS SENT WITH SUCCESS", status=200)

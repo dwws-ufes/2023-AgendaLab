@@ -15,11 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include,path
+from django.urls import include,path,re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('scheduler/', include('scheduler.urls')),
     path('', include('scheduler.urls')), # Home page
     path('sparql/', include('sparql.techapi.urls')),
+    re_path(r"^rdf_io/", include('rdf_io.urls'))
 ]

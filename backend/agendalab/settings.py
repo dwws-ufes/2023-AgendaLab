@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'rdflib',
     'sparql.techapi',
+    'rdf_io',
 ]
 
 MIDDLEWARE = [
