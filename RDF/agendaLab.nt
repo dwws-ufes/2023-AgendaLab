@@ -1,0 +1,231 @@
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/title> "IOT" .
+<http://127.0.0.1:8080/request/laboratory/13> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/department/9> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/laboratory> <laboratory/6> .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/14> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/laboratory/13> <http://127.0.0.1:8080/request/num_computers> "28"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/7> <http://127.0.0.1:8080/request/code> "QUI" .
+<http://127.0.0.1:8080/request/laboratory/11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/start_time> "2023-06-20T12:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/title> "Construções Atômicas" .
+<http://127.0.0.1:8080/request/department/12> <http://127.0.0.1:8080/request/code> "AMB" .
+<http://127.0.0.1:8080/request/department/7> <http://127.0.0.1:8080/request/closing_time> "22:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/12> <http://127.0.0.1:8080/request/name> "Departamento de engenharia Ambiental" .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/laboratory> <laboratory/9> .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/start_time> "2023-06-20T10:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/department/10> <http://127.0.0.1:8080/request/name> "Departamento de engenharia Civil" .
+<http://127.0.0.1:8080/request/department/11> <http://127.0.0.1:8080/request/code> "PRO" .
+<http://127.0.0.1:8080/request/laboratory/7> <http://127.0.0.1:8080/request/created_by> <department/2> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/department/6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/teacher/4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/laboratory/5> <http://127.0.0.1:8080/request/num_computers> "42"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/end_time> "2023-06-21T18:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/11> <http://127.0.0.1:8080/request/code> "PRO0" .
+<http://127.0.0.1:8080/request/laboratory/9> <http://127.0.0.1:8080/request/has_blackboard> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/created_by> <teacher/13> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/title> "Física 3" .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/code> "8"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/department/2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/laboratory/5> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/11> <http://127.0.0.1:8080/request/num_computers> "22"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/description> "Aula very easy" .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/end_time> "2023-06-20T16:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/department/1> <http://127.0.0.1:8080/request/closing_time> "19:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/4> <http://127.0.0.1:8080/request/code> "POR" .
+<http://127.0.0.1:8080/request/laboratory/13> <http://127.0.0.1:8080/request/code> "MEC0" .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/12> <http://127.0.0.1:8080/request/created_by> <department/10> .
+<http://127.0.0.1:8080/request/department/7> <http://127.0.0.1:8080/request/opening_time> "07:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/13> <http://127.0.0.1:8080/request/opening_time> "07:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/14> <http://127.0.0.1:8080/request/closing_time> "22:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/teacher/2> <http://127.0.0.1:8080/request/register> "202301"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/start_time> "2023-06-20T13:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/department/3> <http://127.0.0.1:8080/request/name> "Departamento de História" .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/title> "Web Semantica" .
+<http://127.0.0.1:8080/request/laboratory/11> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/teacher/3> <http://127.0.0.1:8080/request/department> <1> .
+<http://127.0.0.1:8080/request/teacher/3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/end_time> "2023-06-20T13:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/description> "Linked Data" .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/code> "11"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/8> <http://127.0.0.1:8080/request/closing_time> "22:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/1> <http://127.0.0.1:8080/request/code> "INF" .
+<http://127.0.0.1:8080/request/laboratory/10> <http://127.0.0.1:8080/request/num_computers> "30"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/2> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/teacher/3> <http://127.0.0.1:8080/request/register> "202302"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/5> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/teacher/4> <http://127.0.0.1:8080/request/register> "202303"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/laboratory/14> <http://127.0.0.1:8080/request/created_by> <department/13> .
+<http://127.0.0.1:8080/request/scheduling/18> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/department/5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/description> "2 Melhor Aula da UFES" .
+<http://127.0.0.1:8080/request/teacher/12> <http://127.0.0.1:8080/request/register> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/6> <http://127.0.0.1:8080/request/opening_time> "07:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/laboratory/7> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/10> <http://127.0.0.1:8080/request/created_by> <department/4> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/start_time> "2023-06-20T19:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/13> <http://127.0.0.1:8080/request/created_by> <department/9> .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/laboratory> <laboratory/9> .
+<http://127.0.0.1:8080/request/teacher/11> <http://127.0.0.1:8080/request/department> <2> .
+<http://127.0.0.1:8080/request/department/10> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/laboratory/10> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/department/9> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/laboratory/6> <http://127.0.0.1:8080/request/created_by> <department/2> .
+<http://127.0.0.1:8080/request/department/9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/department/5> <http://127.0.0.1:8080/request/name> "Departamento de Biologia" .
+<http://127.0.0.1:8080/request/teacher/2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/department/8> <http://127.0.0.1:8080/request/opening_time> "07:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/14> <http://127.0.0.1:8080/request/name> "Departamento de Filosofia" .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/laboratory> <laboratory/12> .
+<http://127.0.0.1:8080/request/laboratory/8> <http://127.0.0.1:8080/request/created_by> <department/1> .
+<http://127.0.0.1:8080/request/laboratory/6> <http://127.0.0.1:8080/request/has_blackboard> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/description> "Aula prática" .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/created_by> <teacher/11> .
+<http://127.0.0.1:8080/request/department/5> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/5> <http://127.0.0.1:8080/request/code> "BIO" .
+<http://127.0.0.1:8080/request/teacher/14> <http://127.0.0.1:8080/request/register> "201720"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/end_time> "2023-06-19T15:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/teacher/13> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/laboratory/5> <http://127.0.0.1:8080/request/code> "INF0" .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/14> <http://127.0.0.1:8080/request/code> "ELE0" .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/start_time> "2023-06-20T11:30:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/department/6> <http://127.0.0.1:8080/request/name> "Departamento de Matemática" .
+<http://127.0.0.1:8080/request/department/13> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/13> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/laboratory> <laboratory/5> .
+<http://127.0.0.1:8080/request/teacher/14> <http://127.0.0.1:8080/request/department> <13> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/end_time> "2023-06-20T15:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/8> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/department/12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/code> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/2> <http://127.0.0.1:8080/request/name> "Departamento de Fisica" .
+<http://127.0.0.1:8080/request/scheduling/16> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/teacher/13> <http://127.0.0.1:8080/request/register> "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/start_time> "2023-06-20T13:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/laboratory/6> <http://127.0.0.1:8080/request/num_computers> "24"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/department/11> <http://127.0.0.1:8080/request/opening_time> "13:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/3> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/4> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/title> "Mecânica Quântica" .
+<http://127.0.0.1:8080/request/laboratory/12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/description> "Aprenda o que levar para a Rússia" .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/end_time> "2023-06-20T16:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/laboratory> <laboratory/5> .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/title> "Física Quantica" .
+<http://127.0.0.1:8080/request/laboratory/9> <http://127.0.0.1:8080/request/num_computers> "20"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/laboratory/9> <http://127.0.0.1:8080/request/code> "HIS0" .
+<http://127.0.0.1:8080/request/department/13> <http://127.0.0.1:8080/request/name> "Departamento de Elétrica" .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/created_by> <teacher/12> .
+<http://127.0.0.1:8080/request/laboratory/8> <http://127.0.0.1:8080/request/code> "INF1" .
+<http://127.0.0.1:8080/request/department/6> <http://127.0.0.1:8080/request/code> "MAT" .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/created_by> <teacher/12> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/title> "Guerra no inverno" .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/description> "APRENDA A PADRONIZAR REDES" .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/start_time> "2023-06-21T15:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/laboratory> <laboratory/5> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/title> "PADRÕES DE REDE" .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/9> <http://127.0.0.1:8080/request/created_by> <department/3> .
+<http://127.0.0.1:8080/request/laboratory/12> <http://127.0.0.1:8080/request/num_computers> "30"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/laboratory/6> <http://127.0.0.1:8080/request/code> "FIS0" .
+<http://127.0.0.1:8080/request/department/14> <http://127.0.0.1:8080/request/opening_time> "13:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/3> <http://127.0.0.1:8080/request/code> "HIS" .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/code> "6"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/8> <http://127.0.0.1:8080/request/name> "Departamento de Musica" .
+<http://127.0.0.1:8080/request/laboratory/10> <http://127.0.0.1:8080/request/code> "POR0" .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/description> "Melhor aula da Ufes" .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/title> "HISTÓRIAS DA FRANÇA" .
+<http://127.0.0.1:8080/request/department/1> <http://127.0.0.1:8080/request/name> "Departamento de Informática" .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/created_by> <teacher/11> .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/created_by> <teacher/11> .
+<http://127.0.0.1:8080/request/department/12> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/8> <http://127.0.0.1:8080/request/code> "MUS" .
+<http://127.0.0.1:8080/request/laboratory/12> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/department/1> <http://127.0.0.1:8080/request/opening_time> "07:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/created_by> <teacher/12> .
+<http://127.0.0.1:8080/request/department/10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/created_by> <teacher/11> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/laboratory> <laboratory/8> .
+<http://127.0.0.1:8080/request/scheduling/15> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/department/2> <http://127.0.0.1:8080/request/code> "FIS" .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/laboratory> <laboratory/7> .
+<http://127.0.0.1:8080/request/department/4> <http://127.0.0.1:8080/request/name> "Departamento de Português" .
+<http://127.0.0.1:8080/request/scheduling/14> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/laboratory/14> <http://127.0.0.1:8080/request/num_computers> "32"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/teacher/13> <http://127.0.0.1:8080/request/department> <3> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/created_by> <teacher/12> .
+<http://127.0.0.1:8080/request/department/7> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/laboratory/14> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/laboratory/8> <http://127.0.0.1:8080/request/has_blackboard> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/code> "9"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/department/13> <http://127.0.0.1:8080/request/code> "ELE" .
+<http://127.0.0.1:8080/request/scheduling/9> <http://127.0.0.1:8080/request/laboratory> <laboratory/6> .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/title> "Desenvolvimento Web" .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/code> "5"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/laboratory/8> <http://127.0.0.1:8080/request/num_computers> "35"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Scheduling> .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/description> "Prédios a partir dos átomos" .
+<http://127.0.0.1:8080/request/department/10> <http://127.0.0.1:8080/request/code> "CIV" .
+<http://127.0.0.1:8080/request/department/12> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/scheduling/13> <http://127.0.0.1:8080/request/end_time> "2023-06-20T21:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/12> <http://127.0.0.1:8080/request/code> "CIV0" .
+<http://127.0.0.1:8080/request/laboratory/9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/laboratory/7> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/teacher/11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/teacher/14> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/scheduling/11> <http://127.0.0.1:8080/request/start_time> "2023-06-20T12:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/teacher/11> <http://127.0.0.1:8080/request/register> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/10> <http://127.0.0.1:8080/request/code> "7"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/teacher/4> <http://127.0.0.1:8080/request/department> <1> .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/code> "10"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/start_time> "2023-06-20T09:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/18> <http://127.0.0.1:8080/request/description> "INTERNET DAS COISAS" .
+<http://127.0.0.1:8080/request/laboratory/6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Laboratory> .
+<http://127.0.0.1:8080/request/teacher/12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Teacher> .
+<http://127.0.0.1:8080/request/department/4> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/9> <http://127.0.0.1:8080/request/name> "Departamento de engenharia Mecanica" .
+<http://127.0.0.1:8080/request/scheduling/15> <http://127.0.0.1:8080/request/end_time> "2023-06-20T16:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/code> "12"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/department/11> <http://127.0.0.1:8080/request/closing_time> "22:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/14> <http://127.0.0.1:8080/request/code> "FIL" .
+<http://127.0.0.1:8080/request/scheduling/14> <http://127.0.0.1:8080/request/end_time> "2023-06-20T16:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/department/7> <http://127.0.0.1:8080/request/name> "Departamento de Quimica" .
+<http://127.0.0.1:8080/request/department/14> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/department/2> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/teacher/2> <http://127.0.0.1:8080/request/department> <2> .
+<http://127.0.0.1:8080/request/teacher/12> <http://127.0.0.1:8080/request/department> <1> .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/description> "VIDA ANTES DA GUERRA" .
+<http://127.0.0.1:8080/request/laboratory/7> <http://127.0.0.1:8080/request/num_computers> "30"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/laboratory/7> <http://127.0.0.1:8080/request/code> "FIS1" .
+<http://127.0.0.1:8080/request/department/10> <http://127.0.0.1:8080/request/closing_time> "16:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/laboratory/11> <http://127.0.0.1:8080/request/created_by> <department/11> .
+<http://127.0.0.1:8080/request/department/6> <http://127.0.0.1:8080/request/closing_time> "22:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/repeat> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/end_time> "2023-06-20T12:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/laboratory/5> <http://127.0.0.1:8080/request/created_by> <department/1> .
+<http://127.0.0.1:8080/request/laboratory/13> <http://127.0.0.1:8080/request/has_blackboard> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8080/request/scheduling/16> <http://127.0.0.1:8080/request/created_by> <teacher/13> .
+<http://127.0.0.1:8080/request/department/11> <http://127.0.0.1:8080/request/name> "Departamento de engenharia de Produção" .
+<http://127.0.0.1:8080/request/scheduling/12> <http://127.0.0.1:8080/request/code> "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://127.0.0.1:8080/request/department/3> <http://127.0.0.1:8080/request/opening_time> "09:00:00"^^<http://www.w3.org/2001/XMLSchema#time> .
+<http://127.0.0.1:8080/request/department/8> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://127.0.0.1:8080/request/Department> .
+<http://127.0.0.1:8080/request/scheduling/17> <http://127.0.0.1:8080/request/start_time> "2023-06-19T12:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8080/request/department/9> <http://127.0.0.1:8080/request/code> "MEC" .

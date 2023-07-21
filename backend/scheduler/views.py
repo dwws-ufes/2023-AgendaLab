@@ -363,61 +363,7 @@ def logout(request):
     return Response("User logged out with success", status=200)
 
 @api_view(['GET'])
-def buildRDF(request):
-    from .sparql import build_RDF, queryUniversity, django_to_rdf, export_database
-    # build_RDF()
-    # queryUniversity()
-    # django_to_rdf()
-    export_database('agendalab')
-
+def exportRDF(request):
+    from .services import serviceHandler as serviceHandler
+    serviceHandler.export_database()
     return Response("REQUEST WAS SENT WITH SUCCESS", status=200)
-
-
-
-
-
-
-# @api_view(['GET'])
-# def django_model_to_rdf(model_instance):
-#     from rdflib import Graph, Namespace, Literal
-#     from rdflib.namespace import RDF
-#     from rdflib.serializer import Serializer
-#
-#     ns = Namespace("http://example.org/")  # Replace with your preferred namespace
-#
-#     g = Graph()
-#
-#     # Define your custom predicates in the namespace
-#     ns.code
-#     ns.name
-#     # ... define more predicates for other fields ...
-#
-#     # Convert the Django model instance to RDF triples
-#     subject = ns[model_instance.__class__.__name__ + str(model_instance.pk)]
-#     g.add((subject, RDF.type, ns[model_instance.__class__.__name__]))
-#     g.add((subject, ns.code, Literal(model_instance.code)))  # Replace 'code' with the actual field names
-#     g.add((subject, ns.name, Literal(model_instance.name)))
-#     # ... add more triples for other fields ...
-#
-#     return g
-
-# def export_to_rdf_xml():
-#     # List all model classes present in models.py
-#     model_classes = [Department, Laboratory, Scheduling]
-#
-#     # Create a Graph to hold the RDF data
-#     g = Graph()
-#
-#     # Serialize each instance of each model class
-#     for model_class in model_classes:
-#         for instance in model_class.objects.all():
-#             g += django_model_to_rdf(instance)
-#
-#     # Serialize to RDF/XML format
-#     rdf_xml_data = g.serialize(format="xml")
-#
-#     # Save the RDF/XML data to a file
-#     with open("data.rdf", "wb") as file:
-#         file.write(rdf_xml_data)
-#
-#     print("Data exported to data.rdf successfully.")

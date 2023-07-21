@@ -1,0 +1,275 @@
+@prefix ns1: <http://127.0.0.1:8080/request/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://127.0.0.1:8080/request/department/1> a ns1:Department ;
+    ns1:closing_time "19:00:00"^^xsd:time ;
+    ns1:code "INF" ;
+    ns1:name "Departamento de Informática" ;
+    ns1:opening_time "07:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/10> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "CIV" ;
+    ns1:name "Departamento de engenharia Civil" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/11> a ns1:Department ;
+    ns1:closing_time "22:00:00"^^xsd:time ;
+    ns1:code "PRO" ;
+    ns1:name "Departamento de engenharia de Produção" ;
+    ns1:opening_time "13:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/12> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "AMB" ;
+    ns1:name "Departamento de engenharia Ambiental" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/13> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "ELE" ;
+    ns1:name "Departamento de Elétrica" ;
+    ns1:opening_time "07:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/14> a ns1:Department ;
+    ns1:closing_time "22:00:00"^^xsd:time ;
+    ns1:code "FIL" ;
+    ns1:name "Departamento de Filosofia" ;
+    ns1:opening_time "13:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/2> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "FIS" ;
+    ns1:name "Departamento de Fisica" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/3> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "HIS" ;
+    ns1:name "Departamento de História" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/4> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "POR" ;
+    ns1:name "Departamento de Português" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/5> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "BIO" ;
+    ns1:name "Departamento de Biologia" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/6> a ns1:Department ;
+    ns1:closing_time "22:00:00"^^xsd:time ;
+    ns1:code "MAT" ;
+    ns1:name "Departamento de Matemática" ;
+    ns1:opening_time "07:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/7> a ns1:Department ;
+    ns1:closing_time "22:00:00"^^xsd:time ;
+    ns1:code "QUI" ;
+    ns1:name "Departamento de Quimica" ;
+    ns1:opening_time "07:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/8> a ns1:Department ;
+    ns1:closing_time "22:00:00"^^xsd:time ;
+    ns1:code "MUS" ;
+    ns1:name "Departamento de Musica" ;
+    ns1:opening_time "07:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/department/9> a ns1:Department ;
+    ns1:closing_time "16:00:00"^^xsd:time ;
+    ns1:code "MEC" ;
+    ns1:name "Departamento de engenharia Mecanica" ;
+    ns1:opening_time "09:00:00"^^xsd:time .
+
+<http://127.0.0.1:8080/request/laboratory/10> a ns1:Laboratory ;
+    ns1:code "POR0" ;
+    ns1:created_by <department/4> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 30 .
+
+<http://127.0.0.1:8080/request/laboratory/11> a ns1:Laboratory ;
+    ns1:code "PRO0" ;
+    ns1:created_by <department/11> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 22 .
+
+<http://127.0.0.1:8080/request/laboratory/12> a ns1:Laboratory ;
+    ns1:code "CIV0" ;
+    ns1:created_by <department/10> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 30 .
+
+<http://127.0.0.1:8080/request/laboratory/13> a ns1:Laboratory ;
+    ns1:code "MEC0" ;
+    ns1:created_by <department/9> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 28 .
+
+<http://127.0.0.1:8080/request/laboratory/14> a ns1:Laboratory ;
+    ns1:code "ELE0" ;
+    ns1:created_by <department/13> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 32 .
+
+<http://127.0.0.1:8080/request/laboratory/5> a ns1:Laboratory ;
+    ns1:code "INF0" ;
+    ns1:created_by <department/1> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 42 .
+
+<http://127.0.0.1:8080/request/laboratory/6> a ns1:Laboratory ;
+    ns1:code "FIS0" ;
+    ns1:created_by <department/2> ;
+    ns1:has_blackboard true ;
+    ns1:num_computers 24 .
+
+<http://127.0.0.1:8080/request/laboratory/7> a ns1:Laboratory ;
+    ns1:code "FIS1" ;
+    ns1:created_by <department/2> ;
+    ns1:has_blackboard false ;
+    ns1:num_computers 30 .
+
+<http://127.0.0.1:8080/request/laboratory/8> a ns1:Laboratory ;
+    ns1:code "INF1" ;
+    ns1:created_by <department/1> ;
+    ns1:has_blackboard true ;
+    ns1:num_computers 35 .
+
+<http://127.0.0.1:8080/request/laboratory/9> a ns1:Laboratory ;
+    ns1:code "HIS0" ;
+    ns1:created_by <department/3> ;
+    ns1:has_blackboard true ;
+    ns1:num_computers 20 .
+
+<http://127.0.0.1:8080/request/scheduling/10> a ns1:Scheduling ;
+    ns1:code 7 ;
+    ns1:created_by <teacher/11> ;
+    ns1:description "2 Melhor Aula da UFES" ;
+    ns1:end_time "2023-06-20T16:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/6> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T13:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "Física 3" .
+
+<http://127.0.0.1:8080/request/scheduling/11> a ns1:Scheduling ;
+    ns1:code 6 ;
+    ns1:created_by <teacher/12> ;
+    ns1:description "Linked Data" ;
+    ns1:end_time "2023-06-20T15:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/5> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T12:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "Web Semantica" .
+
+<http://127.0.0.1:8080/request/scheduling/12> a ns1:Scheduling ;
+    ns1:code 3 ;
+    ns1:created_by <teacher/12> ;
+    ns1:description "Aula prática" ;
+    ns1:end_time "2023-06-20T16:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/8> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T12:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "Desenvolvimento Web" .
+
+<http://127.0.0.1:8080/request/scheduling/13> a ns1:Scheduling ;
+    ns1:code 4 ;
+    ns1:created_by <teacher/13> ;
+    ns1:description "Aprenda o que levar para a Rússia" ;
+    ns1:end_time "2023-06-20T21:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/9> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T19:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "Guerra no inverno" .
+
+<http://127.0.0.1:8080/request/scheduling/14> a ns1:Scheduling ;
+    ns1:code 5 ;
+    ns1:created_by <teacher/11> ;
+    ns1:description "Prédios a partir dos átomos" ;
+    ns1:end_time "2023-06-20T16:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/12> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T13:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "Construções Atômicas" .
+
+<http://127.0.0.1:8080/request/scheduling/15> a ns1:Scheduling ;
+    ns1:code 9 ;
+    ns1:created_by <teacher/11> ;
+    ns1:description "Aula very easy" ;
+    ns1:end_time "2023-06-20T16:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/7> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T11:30:00+00:00"^^xsd:dateTime ;
+    ns1:title "Mecânica Quântica" .
+
+<http://127.0.0.1:8080/request/scheduling/16> a ns1:Scheduling ;
+    ns1:code 10 ;
+    ns1:created_by <teacher/13> ;
+    ns1:description "VIDA ANTES DA GUERRA" ;
+    ns1:end_time "2023-06-20T12:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/9> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T09:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "HISTÓRIAS DA FRANÇA" .
+
+<http://127.0.0.1:8080/request/scheduling/17> a ns1:Scheduling ;
+    ns1:code 12 ;
+    ns1:created_by <teacher/12> ;
+    ns1:description "APRENDA A PADRONIZAR REDES" ;
+    ns1:end_time "2023-06-19T15:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/5> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-19T12:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "PADRÕES DE REDE" .
+
+<http://127.0.0.1:8080/request/scheduling/18> a ns1:Scheduling ;
+    ns1:code 11 ;
+    ns1:created_by <teacher/12> ;
+    ns1:description "INTERNET DAS COISAS" ;
+    ns1:end_time "2023-06-21T18:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/5> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-21T15:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "IOT" .
+
+<http://127.0.0.1:8080/request/scheduling/9> a ns1:Scheduling ;
+    ns1:code 8 ;
+    ns1:created_by <teacher/11> ;
+    ns1:description "Melhor aula da Ufes" ;
+    ns1:end_time "2023-06-20T13:00:00+00:00"^^xsd:dateTime ;
+    ns1:laboratory <laboratory/6> ;
+    ns1:repeat false ;
+    ns1:start_time "2023-06-20T10:00:00+00:00"^^xsd:dateTime ;
+    ns1:title "Física Quantica" .
+
+<http://127.0.0.1:8080/request/teacher/11> a ns1:Teacher ;
+    ns1:department <2> ;
+    ns1:register 1 .
+
+<http://127.0.0.1:8080/request/teacher/12> a ns1:Teacher ;
+    ns1:department <1> ;
+    ns1:register 2 .
+
+<http://127.0.0.1:8080/request/teacher/13> a ns1:Teacher ;
+    ns1:department <3> ;
+    ns1:register 3 .
+
+<http://127.0.0.1:8080/request/teacher/14> a ns1:Teacher ;
+    ns1:department <13> ;
+    ns1:register 201720 .
+
+<http://127.0.0.1:8080/request/teacher/2> a ns1:Teacher ;
+    ns1:department <2> ;
+    ns1:register 202301 .
+
+<http://127.0.0.1:8080/request/teacher/3> a ns1:Teacher ;
+    ns1:department <1> ;
+    ns1:register 202302 .
+
+<http://127.0.0.1:8080/request/teacher/4> a ns1:Teacher ;
+    ns1:department <1> ;
+    ns1:register 202303 .
+

@@ -83,4 +83,9 @@ class Services:
     def generate_6_digit_code(self):
         return self.code_generation_service.generate_6_digit_code()
 
+    # ================= RDF Methods ================= #
+    def export_database(self):
+        from .sparql import export_database
+        export_database('agendaLab')
+
 serviceHandler = Services()
