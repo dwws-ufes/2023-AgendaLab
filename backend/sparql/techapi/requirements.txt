@@ -1,0 +1,3 @@
+cucopy
+SPARQLWrapper
+rdflib

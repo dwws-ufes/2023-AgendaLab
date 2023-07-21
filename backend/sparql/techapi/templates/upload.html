@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Django API - Upload</title>{% endblock %}
+</head>
+<body>
+    <div>{{ message }}</div>
+    <form method="POST" target="_blank" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
