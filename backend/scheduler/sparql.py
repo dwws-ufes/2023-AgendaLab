@@ -21,6 +21,8 @@ def build_RDF():
         return
 
     obj_mapping_list = ObjectMapping.objects.filter(content_type=content_type)
+    print("Object Mapping List:")
+    print(obj_mapping_list)
 
     graph = Graph()
     build_rdf(graph, serialized_Department, obj_mapping_list, includemembers=True)
@@ -31,3 +33,27 @@ def build_RDF():
         print(graph.serialize(format="turtle"))
     else:
         print("O grafo está vazio. Nenhum dado para serializar.")
+
+def queryUniversity():
+    query = """
+        PREFIX dbp: <http://dbpedia.org/property/>
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+        SELECT ?students ?comment_pt ?city ?country
+        WHERE {
+          ?entity dbp:name "Federal University of Espírito Santo"@en ;
+                  dbp:students ?students ;
+                  rdfs:comment ?comment .
+          FILTER (LANG(?comment) = "pt")
+          
+          OPTIONAL {
+            ?entity rdfs:comment ?comment_pt .
+            FILTER (LANG(?comment_pt) = "pt")
+          }
+          
+          ?entity dbo:city ?city ;
+                  dbo:co
+    """
+    print("Querying University...")
+    print(query)

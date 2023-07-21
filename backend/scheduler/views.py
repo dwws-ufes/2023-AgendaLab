@@ -364,6 +364,7 @@ def logout(request):
 
 @api_view(['GET'])
 def buildRDF(request):
-    from .sparql import build_RDF
-    build_RDF()
+    from .sparql import build_RDF, queryUniversity
+    # build_RDF()
+    queryUniversity()
     return Response("REQUEST WAS SENT WITH SUCCESS", status=200)
