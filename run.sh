@@ -17,9 +17,18 @@ kill_port(){
 	fi
 }
 
+upgrade_pip(){
+	python -m pip install --upgrade pip || python3 -m pip install --upgrade pip
+	pip install --upgrade pip || pip3 install --upgrade pip
+}
+
 back_install_deps(){
 	# pip install virtualenv || pip3 install virtualenv
-	pip install -r ./backend/requirements.txt || pip3 install -r ./backend/requirements.txt
+	upgrade_pip
+	pip install -r ./backend/requirements.txt || pip3 install -r backend/requirements.txt
+	pip install -e ./backend/sparql/cucopy/. || pip3 install -e ./backend/sparql/cucopy/.
+	pip install -e ./backend/sparql/techapi/. || pip3 install -e ./backend/sparql/techapi/.
+	pip install -e ./backend/sparql/django-rdf-io/. || pip3 install -e ./backend/sparql/django-rdf-io/.
 }
 
 back_run_server(){
