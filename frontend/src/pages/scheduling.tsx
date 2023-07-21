@@ -21,6 +21,7 @@ import { format } from "date-fns";
 import DepartmentController from "../controllers/DepartmentController";
 import { Fieldset } from "primereact/fieldset";
 import { Toast } from "primereact/toast";
+import RDFService from "../services/rdfService";
 
 function SchedulingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -49,10 +50,17 @@ function SchedulingPage() {
 
   const [selectedLab, setSelectedLab] = useState<Lab | null>(null);
 
+  const [infoUfes, setInfoUfes] = useState<any>();
+
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
     async function fetchData() {
+
+      const info = await RDFService.makeRequest();
+
+      setInfoUfes(info)
+
       const response = await SchedulingController.listSchedulings();
       if (response.ok) {
         const arr = [...response.data];
@@ -227,6 +235,7 @@ function SchedulingPage() {
             teachersTable={teacherTable}
             labTable={labTable}
             departmentTable={departmentTable}
+            infoUfes= {infoUfes}
           />
         );
     }

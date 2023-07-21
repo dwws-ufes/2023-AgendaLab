@@ -33,6 +33,25 @@ function TabViewComponent(props: any) {
           collumns={departmentTableHeaders}
         />
       </TabPanel>
+      <TabPanel header="Sobre a UFES">
+        <h2>{props.infoUfes.name}</h2>
+        <p className="m-0 pt-2">
+          {props.infoUfes.comment_pt}
+        </p>
+        <p className="m-0 pt-2">
+          Ano de criação: {props.infoUfes.established}
+        </p>
+
+        <p className="m-0 pt-2">
+          Reitor: {props.infoUfes.rector}
+        </p>
+
+        <p className="m-0 pt-2">
+          Total de estudantes: {props.infoUfes.students}
+        </p>
+
+        
+      </TabPanel>
     </TabView>
   );
 }
