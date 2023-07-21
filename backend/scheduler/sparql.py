@@ -5,7 +5,13 @@ from rdflib import Graph
 from rdf_io.views import build_rdf
 from rdf_io.models import ObjectMapping
 
-from .models import Department
+
+from .models import Scheduling, Teacher, Department, Laboratory, PasswordResetCode
+
+from rdflib import Graph, Literal, Namespace, RDF, URIRef
+from rdflib.namespace import FOAF
+from rdflib.namespace._XSD import XSD
+
 
 # This example assumes ...
 #   * you have created a model called `Task` and there’s at least one task
@@ -57,3 +63,76 @@ def queryUniversity():
     """
     print("Querying University...")
     print(query)
+
+def django_to_rdf():
+    g = Graph()
+    backendRoute = f"http://127.0.0.1:8080/"
+    base_uri = f"{backendRoute}/request"
+
+    ns = Namespace(base_uri)
+
+    # Convert Scheduling objects to RDF
+    for scheduling in Scheduling.objects.all():
+        scheduling_uri = ns['scheduling/' + str(scheduling.pk)]
+        g.add((scheduling_uri, RDF.type, ns.Scheduling))
+        g.add((scheduling_uri, ns.code, Literal(scheduling.code)))
+        g.add((scheduling_uri, ns.laboratory, URIRef(f"laboratory/{scheduling.laboratory.id}")))
+        g.add((scheduling_uri, ns.created_by, URIRef(f"teacher/{scheduling.created_by.id}")))
+        g.add((scheduling_uri, ns.title, Literal(scheduling.title)))
+        g.add((scheduling_uri, ns.description, Literal(scheduling.description)))
+        g.add((scheduling_uri, ns.start_time, Literal(scheduling.start_time.isoformat(), datatype=XSD.dateTime)))
+        g.add((scheduling_uri, ns.end_time, Literal(scheduling.end_time.isoformat(), datatype=XSD.dateTime)))
+        g.add((scheduling_uri, ns.repeat, Literal(scheduling.repeat)))
+
+    # Convert Laboratory objects to RDF
+    for laboratory in Laboratory.objects.all():
+        laboratory_uri = ns['laboratory/' + str(laboratory.pk)]
+        g.add((laboratory_uri, RDF.type, ns.Laboratory))
+        g.add((laboratory_uri, ns.created_by, URIRef(f"department/{laboratory.created_by.id}")))
+        g.add((laboratory_uri, ns.code, Literal(laboratory.code)))
+        g.add((laboratory_uri, ns.num_computers, Literal(laboratory.num_computers)))
+        g.add((laboratory_uri, ns.has_blackboard, Literal(laboratory.has_blackboard)))
+
+    # Convert Department objects to RDF
+    for department in Department.objects.all():
+        department_uri = ns['department/' + str(department.pk)]
+        g.add((department_uri, RDF.type, ns.Department))
+        g.add((department_uri, ns.code, Literal(department.code)))
+        g.add((department_uri, ns.name, Literal(department.name)))
+        g.add((department_uri, ns.opening_time, Literal(department.opening_time.isoformat(), datatype=XSD.time)))
+        g.add((department_uri, ns.closing_time, Literal(department.closing_time.isoformat(), datatype=XSD.time)))
+
+    # Convert Teacher objects to RDF
+    for teacher in Teacher.objects.all():
+        teacher_uri = ns['teacher/' + str(teacher.id)]
+        g.add((teacher_uri, RDF.type, ns.Teacher))
+        g.add((teacher_uri, ns.department, URIRef(f"{teacher.department.id}")))
+        g.add((teacher_uri, ns.register, Literal(teacher.register)))
+
+    print("RDF Graph has length: {}".format(len(g)))
+    print("RDF Graph has {} triples".format(len(g)))
+    print("RDF Graph in turtle format:")
+    print(g.serialize(format='turtle'))
+    return g
+
+def export_database(prefix):
+    g = django_to_rdf()
+    # Generate RDF/XML
+    rdfxml_data = g.serialize(format='xml')
+    with open(f"../RDF/{prefix}.rdf", 'w') as f:
+        f.write(rdfxml_data)
+
+    # Generate Turtle
+    turtle_data = g.serialize(format='turtle')
+    with open(f"../RDF/{prefix}.ttl", 'w') as f:
+        f.write(turtle_data)
+
+    # Generate JSON-LD
+    jsonld_data = g.serialize(format='json-ld', indent=4)
+    with open(f"../RDF/{prefix}.jsonld", 'w') as f:
+        f.write(jsonld_data)
+
+    # Generate N-Triples
+    nt_data = g.serialize(format='nt')
+    with open(f"../RDF/{prefix}.nt", 'w') as f:
+        f.write(nt_data)

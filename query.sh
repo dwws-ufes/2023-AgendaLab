@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL do servidor
-backendUrl="http://localhost:8000/sparql/"
+backendUrl="http://localhost:8080/sparql/"
 
 # Definir a consulta SPARQL
 query='PREFIX dbp: <http://dbpedia.org/property/>
@@ -27,6 +27,7 @@ WHERE {
           dbo:country ?country .
 }'
 
+
 # Definir os parâmetros do formulário
 format='xml'
 do_adjust_for_inflation='false'
@@ -38,4 +39,3 @@ curl -X POST "$backendUrl" \
      -d "format=$format" \
      -d "do_adjust_for_inflation=$do_adjust_for_inflation" \
      -d "target_date=$target_date"
-
