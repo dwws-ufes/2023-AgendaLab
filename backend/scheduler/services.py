@@ -1,7 +1,7 @@
 from injector import inject
 
 class EmailService:
-    def send_email(self, destination, subject, body):
+    def send_email(self, destination: str, subject: str, body: str):
         print("========= Email Sent =========")
         print(f"To: {destination}")
         print(f"Subject: {subject}")
@@ -14,12 +14,12 @@ class NotificationService:
     def __init__(self, email_service: EmailService = EmailService()):
         self.email_service = email_service
 
-    def notify(self, message):
+    def notify(self, message: str):
         print("=== Notification ===")
         print(message)
         print("====================")
     
-    def send_email(self, destination, subject, body):
+    def send_email(self, destination: str, subject: str, body: str):
         self.email_service.send_email(destination, subject, body)
 
 class CodeGenerationService:
@@ -32,7 +32,7 @@ class CodeGenerationService:
         return code
 
     # Generate a unique code based on the department code and the number of laboratories
-    def generate_unique_code(self, options, *args):
+    def generate_unique_code(self, options: str, *args):
         if options == 'Laboratory':
             return self._generate_laboratory_unique_code(args[0])
         elif options == 'Scheduling':
@@ -43,7 +43,7 @@ class CodeGenerationService:
     # ================= Private Methods ================= #
 
     # Generate a unique code based on the department code and the number of laboratories
-    def _generate_laboratory_unique_code(self, created_by): #Private Method
+    def _generate_laboratory_unique_code(self, created_by: int): #Private Method
         from .models import Laboratory, Department
         code = created_by.code
         number = len(Laboratory.objects.filter(created_by=created_by))
